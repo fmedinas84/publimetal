@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Publimetal — Ingeniería estructural para publicidad exterior</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-void:#0A0F1C;
+    --bg-panel:#111a2c;
+    --bg-panel-2:#16233a;
+    --line:#28374f;
+    --line-soft:#1c2a41;
+    --cyan:#5BE0E8;
+    --amber:#FF8A3D;
+    --amber-dim:#c96a2c;
+    --text:#EDF1F7;
+    --muted:#8A96AC;
+    --white:#ffffff;
+    --radius:10px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation:none !important; transition:none !important;}
+  }
+  body{
+    margin:0;
+    background:var(--bg-void);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .container{max-width:1180px;margin:0 auto;padding:0 24px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--cyan);
+    display:flex;align-items:center;gap:10px;
+    margin-bottom:14px;
+  }
+  .eyebrow::before{content:"";width:22px;height:1px;background:var(--cyan);display:inline-block;}
+  section{padding:96px 0;position:relative;}
+  @media(max-width:720px){section{padding:64px 0;}}
+
+  /* ---------- blueprint grid background ---------- */
+  .grid-bg{
+    position:absolute;inset:0;
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size:44px 44px;
+    mask-image:linear-gradient(to bottom, black, transparent 92%);
+    opacity:0.55;
+    pointer-events:none;
+  }
+
+  /* ---------- nav ---------- */
+  header{
+    position:sticky;top:0;z-index:100;
+    background:rgba(10,15,28,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line-soft);
+  }
+  nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 24px;max-width:1180px;margin:0 auto;
+  }
+  .logo{
+    display:flex;align-items:center;gap:10px;
+    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:19px;
+    letter-spacing:-0.01em;
+  }
+  .logo .mark{
+    width:30px;height:30px;border:1.5px solid var(--cyan);border-radius:4px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--cyan);
+    position:relative;
+  }
+  .logo .mark::after{
+    content:"";position:absolute;inset:-4px;border:1px dashed var(--line);border-radius:6px;
+  }
+  .nav-links{display:flex;gap:32px;align-items:center;}
+  .nav-links a{
+    font-size:14.5px;color:var(--muted);transition:color .15s;
+  }
+  .nav-links a:hover{color:var(--text);}
+  .cta-btn{
+    background:var(--amber);color:#141014;padding:11px 20px;border-radius:6px;
+    font-weight:600;font-size:14px;border:none;cursor:pointer;transition:background .15s, transform .1s;
+    font-family:'Inter',sans-serif;
+  }
+  .cta-btn:hover{background:#ffa25e;}
+  .cta-btn:active{transform:scale(0.98);}
+  .cta-btn.ghost{
+    background:transparent;border:1px solid var(--line);color:var(--text);
+  }
+  .cta-btn.ghost:hover{border-color:var(--cyan);background:rgba(91,224,232,0.06);}
+  .burger{display:none;background:none;border:1px solid var(--line);border-radius:6px;padding:8px 10px;color:var(--text);cursor:pointer;}
+  .burger svg{display:block;}
+
+  @media(max-width:900px){
+    .nav-links{
+      position:fixed;top:65px;left:0;right:0;
+      background:var(--bg-panel);border-bottom:1px solid var(--line);
+      flex-direction:column;align-items:flex-start;
+      padding:20px 24px;gap:18px;
+      transform:translateY(-130%);opacity:0;
+      transition:transform .25s ease, opacity .2s ease;
+    }
+    .nav-links.open{transform:translateY(0);opacity:1;}
+    .nav-links .cta-btn{width:100%;text-align:center;}
+    .burger{display:flex;align-items:center;}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{padding-top:88px;padding-bottom:70px;overflow:hidden;}
+  .hero-grid{
+    display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:center;
+    position:relative;z-index:2;
+  }
+  @media(max-width:960px){.hero-grid{grid-template-columns:1fr;}}
+  .hero h1{font-size:clamp(34px,4.6vw,54px);line-height:1.06;color:var(--white);}
+  .hero h1 span{color:var(--cyan);}
+  .hero p.lead{color:var(--muted);font-size:17px;max-width:520px;margin:22px 0 30px;}
+  .hero .actions{display:flex;gap:14px;flex-wrap:wrap;}
+  .stat-row{display:flex;gap:36px;margin-top:48px;flex-wrap:wrap;}
+  .stat-row .stat b{
+    display:block;font-family:'Space Grotesk',sans-serif;font-size:26px;color:var(--white);
+  }
+  .stat-row .stat span{font-size:12.5px;color:var(--muted);font-family:'IBM Plex Mono',monospace;letter-spacing:0.03em;}
+
+  /* annotated hero visual — signature device */
+  .blueprint-card{
+    position:relative;background:var(--bg-panel);border:1px solid var(--line);border-radius:14px;
+    padding:26px;
+  }
+  .screen-mock{
+    background:linear-gradient(160deg,#0d1830,#182642);
+    border-radius:8px;border:1px solid var(--line);
+    aspect-ratio:4/3;position:relative;overflow:hidden;
+  }
+  .screen-mock .pole{position:absolute;bottom:0;left:50%;width:10px;height:34%;background:#22314c;transform:translateX(-50%);border-left:1px solid #33456399;}
+  .screen-mock .panel{
+    position:absolute;top:14%;left:14%;right:14%;height:46%;
+    background:linear-gradient(135deg,#1c3a52,#0b2338);
+    border:2px solid #2c5270;border-radius:4px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .screen-mock .panel .scan{
+    position:absolute;left:0;right:0;height:26%;top:-30%;
+    background:linear-gradient(180deg, rgba(91,224,232,0.0), rgba(91,224,232,0.16), rgba(91,224,232,0.0));
+    animation:scan 3.6s linear infinite;
+  }
+  @keyframes scan{0%{top:-30%;}100%{top:104%;}}
+  .screen-mock .panel .bars{display:flex;gap:6px;align-items:flex-end;height:38%;}
+  .screen-mock .panel .bars i{width:6px;background:var(--cyan);opacity:0.65;border-radius:1px;}
+  .callout{
+    position:absolute;display:flex;align-items:center;gap:8px;
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--cyan);
+    white-space:nowrap;
+  }
+  .callout .dot{width:7px;height:7px;border:1.5px solid var(--cyan);border-radius:50%;background:var(--bg-void);flex-shrink:0;}
+  .callout .line{width:26px;height:1px;background:var(--cyan);opacity:0.6;flex-shrink:0;}
+  .callout.c1{top:8%;left:8%;}
+  .callout.c2{top:22%;right:6%;flex-direction:row-reverse;text-align:right;}
+  .callout.c3{bottom:16%;left:8%;}
+  .callout.c4{bottom:6%;right:8%;flex-direction:row-reverse;text-align:right;}
+  .callout b{color:var(--white);font-weight:600;}
+  @media(max-width:960px){.callout{font-size:9.5px;} .callout .line{width:16px;}}
+
+  /* ---------- section heads ---------- */
+  .section-head{max-width:640px;margin-bottom:52px;}
+  .section-head h2{font-size:clamp(26px,3.4vw,38px);color:var(--white);}
+  .section-head p{color:var(--muted);margin-top:14px;font-size:16px;}
+
+  /* ---------- trust / quote ---------- */
+  .quote-card{
+    border:1px solid var(--line);border-radius:12px;padding:40px;background:var(--bg-panel);
+    position:relative;
+  }
+  .quote-card::before{
+    content:"APROBADO — VALIDACIÓN ESTRUCTURAL";
+    position:absolute;top:18px;right:22px;font-family:'IBM Plex Mono',monospace;
+    font-size:10px;letter-spacing:0.12em;color:var(--amber-dim);
+    border:1px dashed var(--amber-dim);padding:4px 8px;border-radius:4px;opacity:0.7;
+  }
+  .quote-card p{font-size:20px;color:var(--text);font-family:'Space Grotesk',sans-serif;font-weight:500;max-width:820px;line-height:1.45;}
+  .quote-card footer{margin-top:22px;color:var(--muted);font-size:13.5px;font-family:'IBM Plex Mono',monospace;}
+  .quote-card footer b{color:var(--white);}
+
+  /* ---------- services ---------- */
+  .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  @media(max-width:900px){.services-grid{grid-template-columns:1fr;}}
+  .service-card{
+    background:var(--bg-panel);border:1px solid var(--line);border-radius:12px;padding:30px;
+    transition:border-color .2s, transform .2s;
+  }
+  .service-card:hover{border-color:var(--cyan);transform:translateY(-3px);}
+  .service-card .icon{
+    width:44px;height:44px;border-radius:8px;border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;margin-bottom:20px;color:var(--cyan);
+  }
+  .service-card h3{font-size:19px;color:var(--white);margin-bottom:10px;}
+  .service-card p{color:var(--muted);font-size:14.5px;margin-bottom:16px;}
+  .service-card ul{margin:0 0 18px;padding-left:18px;color:var(--muted);font-size:13.5px;}
+  .service-card .price{
+    font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--cyan);
+    border-top:1px solid var(--line);padding-top:14px;margin-top:auto;
+  }
+  .service-card{display:flex;flex-direction:column;}
+
+  /* ---------- process ---------- */
+  .process-chain{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;
+  }
+  @media(max-width:900px){.process-chain{grid-template-columns:1fr 1fr;}}
+  @media(max-width:560px){.process-chain{grid-template-columns:1fr;}}
+  .process-step{
+    padding:24px 20px;border:1px solid var(--line-soft);position:relative;
+    background:var(--bg-panel);
+  }
+  .process-step:not(:last-child)::after{
+    content:"";position:absolute;top:34px;right:-1px;width:1px;height:20px;background:var(--line);
+  }
+  .process-step .n{
+    font-family:'IBM Plex Mono',monospace;color:var(--cyan);font-size:13px;
+    display:flex;align-items:center;gap:8px;margin-bottom:14px;
+  }
+  .process-step .n::before{
+    content:"";width:8px;height:8px;border:1.5px solid var(--cyan);border-radius:50%;
+  }
+  .process-step h4{font-size:15.5px;color:var(--white);margin-bottom:8px;}
+  .process-step p{font-size:13px;color:var(--muted);}
+
+  /* ---------- projects ---------- */
+  .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px;}
+  .filter-btn{
+    font-family:'IBM Plex Mono',monospace;font-size:12.5px;padding:9px 16px;border-radius:20px;
+    border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;
+    transition:all .15s;
+  }
+  .filter-btn:hover{color:var(--text);border-color:var(--cyan);}
+  .filter-btn.active{background:var(--cyan);color:#04262a;border-color:var(--cyan);font-weight:600;}
+  .projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  @media(max-width:900px){.projects-grid{grid-template-columns:1fr 1fr;}}
+  @media(max-width:600px){.projects-grid{grid-template-columns:1fr;}}
+  .project-card{
+    border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--bg-panel);
+    transition:transform .2s, border-color .2s; display:none;
+  }
+  .project-card.show{display:block;animation:fadein .35s ease;}
+  @keyframes fadein{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+  .project-card:hover{transform:translateY(-3px);border-color:var(--cyan);}
+  .project-thumb{
+    aspect-ratio:16/10;position:relative;
+    background:linear-gradient(150deg,#152238,#0c1729);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .project-thumb .frame{
+    width:62%;height:52%;border:2px solid #2c5270;border-radius:4px;
+    background:linear-gradient(135deg,#1c3a52,#0b2338);position:relative;overflow:hidden;
+  }
+  .project-thumb .frame .bars{position:absolute;bottom:12%;left:12%;display:flex;gap:4px;align-items:flex-end;height:44%;}
+  .project-thumb .frame .bars i{width:5px;background:var(--cyan);opacity:.6;border-radius:1px;}
+  .project-tag{
+    position:absolute;top:12px;left:12px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;
+    color:var(--cyan);border:1px solid var(--cyan);padding:3px 8px;border-radius:12px;
+    background:rgba(10,15,28,0.7);
+  }
+  .project-body{padding:18px 20px;}
+  .project-body h4{font-size:15.5px;color:var(--white);margin-bottom:4px;}
+  .project-body .client{font-size:12.5px;color:var(--muted);margin-bottom:10px;}
+  .project-specs{display:flex;gap:14px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);}
+  .project-specs span b{color:var(--cyan);font-weight:500;}
+
+  /* ---------- catalog (static structures) ---------- */
+  .catalog-band{
+    border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);
+    padding:44px 0;
+  }
+  .catalog-list{display:flex;flex-wrap:wrap;gap:10px 12px;}
+  .catalog-list span{
+    font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--muted);
+    border:1px solid var(--line);padding:7px 13px;border-radius:6px;
+  }
+
+  /* ---------- maintenance ---------- */
+  .maint-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
+  @media(max-width:900px){.maint-grid{grid-template-columns:1fr;}}
+  .maint-features{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:26px 0 30px;}
+  .maint-feature{
+    border:1px solid var(--line);border-radius:8px;padding:16px;font-size:13.5px;color:var(--text);
+    display:flex;align-items:center;gap:10px;
+  }
+  .maint-feature .dotm{width:7px;height:7px;border-radius:50%;background:var(--amber);flex-shrink:0;}
+  .maint-visual{
+    border:1px solid var(--line);border-radius:12px;background:var(--bg-panel);padding:24px;
+  }
+  .maint-visual .bar{height:10px;border-radius:4px;background:var(--line-soft);overflow:hidden;margin-bottom:14px;}
+  .maint-visual .bar i{display:block;height:100%;background:var(--amber);}
+  .maint-visual .row{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--muted);margin-bottom:6px;}
+
+  /* ---------- contact ---------- */
+  .contact-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:56px;}
+  @media(max-width:900px){.contact-grid{grid-template-columns:1fr;}}
+  .contact-info .item{margin-bottom:22px;}
+  .contact-info .item .label{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--cyan);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;}
+  .contact-info .item .val{font-size:15.5px;color:var(--text);}
+  form{
+    background:var(--bg-panel);border:1px solid var(--line);border-radius:12px;padding:32px;
+  }
+  .field{margin-bottom:18px;}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:7px;}
+  .field input, .field select, .field textarea{
+    width:100%;background:var(--bg-void);border:1px solid var(--line);border-radius:6px;
+    padding:12px 14px;color:var(--text);font-family:'Inter',sans-serif;font-size:14.5px;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px rgba(91,224,232,0.12);
+  }
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:560px){.field-row{grid-template-columns:1fr;}}
+  .form-msg{margin-top:14px;font-size:13.5px;color:var(--cyan);display:none;}
+  .form-msg.show{display:block;}
+
+  /* ---------- footer ---------- */
+  footer{border-top:1px solid var(--line-soft);padding:48px 0 32px;}
+  .footer-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:32px;margin-bottom:32px;}
+  .footer-col h5{font-size:12.5px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-family:'IBM Plex Mono',monospace;margin-bottom:14px;font-weight:500;}
+  .footer-col a, .footer-col p{display:block;color:var(--muted);font-size:13.5px;margin-bottom:8px;}
+  .footer-col a:hover{color:var(--cyan);}
+  .footer-bottom{border-top:1px solid var(--line-soft);padding-top:24px;font-size:12.5px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+
+  ::selection{background:var(--cyan);color:#04262a;}
+  :focus-visible{outline:2px solid var(--cyan);outline-offset:2px;}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo">
+      <span class="mark">PM</span>
+      Publimetal
+    </div>
+    <div class="nav-links" id="navLinks">
+      <a href="#servicios">Servicios</a>
+      <a href="#proceso">Proceso</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#mantencion">Mantención</a>
+      <a href="#contacto" class="cta-btn">Cotizar proyecto</a>
+    </div>
+    <button class="burger" id="burgerBtn" aria-label="Abrir menú">
+      <svg width="20" height="14" viewBox="0 0 20 14" fill="none"><path d="M0 1H20M0 7H20M0 13H20" stroke="currentColor" stroke-width="1.5"/></svg>
+    </button>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="grid-bg"></div>
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow">Ingeniería estructural · 40 años</div>
+      <h1>Pantallas LED con <span>respaldo estructural</span> real.</h1>
+      <p class="lead">Diseñamos y calculamos la estructura que sostiene cada pantalla, letrero o soporte publicitario: normativa vigente, permiso municipal y validación estructural firmada, para que la inversión de tu proyecto opere sin interrupciones.</p>
+      <div class="actions">
+        <button class="cta-btn" onclick="document.getElementById('contacto').scrollIntoView()">Solicitar cotización</button>
+        <button class="cta-btn ghost" onclick="document.getElementById('proyectos').scrollIntoView()">Ver proyectos</button>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><b>40+</b><span>AÑOS DE EXPERIENCIA</span></div>
+        <div class="stat"><b>400+</b><span>PANTALLAS DISEÑADAS</span></div>
+        <div class="stat"><b>15–232 m²</b><span>FORMATOS DISEÑADOS</span></div>
+      </div>
+    </div>
+
+    <div class="blueprint-card">
+      <div class="screen-mock">
+        <div class="pole"></div>
+        <div class="panel">
+          <div class="scan"></div>
+          <div class="bars" id="heroBars"></div>
+        </div>
+        <div class="callout c1"><span class="dot"></span><span class="line"></span><b>Cálculo de viento</b></div>
+        <div class="callout c2"><b>Gabinete LED</b><span class="line"></span><span class="dot"></span></div>
+        <div class="callout c3"><span class="dot"></span><span class="line"></span><b>Anclaje certificado</b></div>
+        <div class="callout c4"><b>Permiso municipal</b><span class="line"></span><span class="dot"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST / QUOTE -->
+<section id="nosotros">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Trayectoria</div>
+      <h2>40 años construyendo la publicidad exterior de Chile</h2>
+      <p>Alejandro Medina Turner, Ingeniero Civil de la Universidad de Chile, lidera Publimetal con cuatro décadas de experiencia en diseño y cálculo estructural de soportes para publicidad exterior: pantallas LED, letreros monumentales, unipoles, sobreterraza y mobiliario urbano.</p>
+    </div>
+    <div class="quote-card">
+      <p>"El diseño estructural de una pantalla LED no es solo ingeniería — es garantizar que la inversión del cliente opere con seguridad y sin interrupciones durante muchos años."</p>
+      <footer><b>Alejandro Medina Turner</b> — Ingeniero Civil, U. de Chile · Publimetal</footer>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Servicios</div>
+      <h2>Tres formas de trabajar con nosotros</h2>
+      <p>Confía en Publimetal todo el proceso, o solo la parte que necesitas.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="12" rx="1.5" stroke="currentColor" stroke-width="1.6"/><path d="M8 20h8M12 16v4" stroke="currentColor" stroke-width="1.6"/></svg></div>
+        <h3>Diseño estructural pantallas LED</h3>
+        <p>Cálculo de estructura según normas vigentes, considerando cargas, viento, soporte, anclajes y condiciones reales de instalación.</p>
+        <ul>
+          <li>Asesoría en ubicación y orientación</li>
+          <li>Planos, memoria de cálculo y firma profesional</li>
+          <li>Apoyo en permisos y tramitación</li>
+        </ul>
+        <div class="price">Valor referencial desde $650.000 + IVA</div>
+      </div>
+      <div class="service-card">
+        <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 20V9l8-5 8 5v11" stroke="currentColor" stroke-width="1.6"/><path d="M9 20v-7h6v7" stroke="currentColor" stroke-width="1.6"/></svg></div>
+        <h3>Letreros estáticos de gran formato</h3>
+        <p>Diseño y cálculo estructural para soportes publicitarios estáticos, en vía pública o privada.</p>
+        <ul>
+          <li>Unipole, sobretechos, adosados</li>
+          <li>Building wrap, vallas, backlight/frontlight</li>
+          <li>Prismas, tótems, mobiliario urbano</li>
+        </ul>
+        <div class="price">Cotización según proyecto</div>
+      </div>
+      <div class="service-card">
+        <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z" stroke="currentColor" stroke-width="1.6"/></svg></div>
+        <h3>Fabricación y montaje</h3>
+        <p>Supervisión de fabricación según planos y estándares constructivos, con instalación en terreno enfocada en seguridad.</p>
+        <ul>
+          <li>Estructuras metálicas a medida</li>
+          <li>Coordinación técnica en obra</li>
+          <li>Puesta en marcha y mantenimiento</li>
+        </ul>
+        <div class="price">Cotización según proyecto</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESO -->
+<section id="proceso">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">8 pasos</div>
+      <h2>Un proyecto publicitario exitoso y seguro</h2>
+      <p>Abordamos cada etapa para que la pantalla sea segura, rentable y esté preparada para durar.</p>
+    </div>
+    <div class="process-chain">
+      <div class="process-step"><div class="n mono">01</div><h4>Arquitectura</h4><p>Evaluamos emplazamiento, altura, orientación, visibilidad y materialidad para integrar la pantalla con criterio técnico y estético.</p></div>
+      <div class="process-step"><div class="n mono">02</div><h4>Panel digital</h4><p>Definimos resolución, brillo, tamaño de gabinete, protección y configuración LED según uso, distancia de visión y entorno.</p></div>
+      <div class="process-step"><div class="n mono">03</div><h4>Ingeniería</h4><p>Calculamos la estructura según normas vigentes, considerando cargas, viento, soporte, anclajes y condiciones reales.</p></div>
+      <div class="process-step"><div class="n mono">04</div><h4>Validación estructural</h4><p>Preparamos la documentación técnica, la validación estructural y la firma profesional requeridas para respaldar el proyecto.</p></div>
+      <div class="process-step"><div class="n mono">05</div><h4>Permisos</h4><p>Acompañamos la revisión de permisos y exigencias municipales, viales y normativas para viabilizar la instalación.</p></div>
+      <div class="process-step"><div class="n mono">06</div><h4>Fabricación</h4><p>Supervisamos la fabricación de estructuras y componentes según planos, especificaciones técnicas y estándares constructivos.</p></div>
+      <div class="process-step"><div class="n mono">07</div><h4>Montaje</h4><p>Planificamos y ejecutamos la instalación en terreno con foco en seguridad, coordinación técnica y correcta puesta en obra.</p></div>
+      <div class="process-step"><div class="n mono">08</div><h4>Mantenimiento</h4><p>Diseñamos planes de mantenimiento preventivo y correctivo, con limpieza, revisión eléctrica, repuestos y soporte continuo.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROYECTOS -->
+<section id="proyectos">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Proyectos destacados</div>
+      <h2>Pantallas y estructuras diseñadas por Publimetal</h2>
+      <p>Filtra por tipo de emplazamiento — cada contexto exige una norma y un cálculo distintos.</p>
+    </div>
+    <div class="filters" id="filters">
+      <button class="filter-btn active" data-filter="all">Todos</button>
+      <button class="filter-btn" data-filter="via">Vía pública</button>
+      <button class="filter-btn" data-filter="metro">Metro</button>
+      <button class="filter-btn" data-filter="aeropuerto">Aeropuerto</button>
+      <button class="filter-btn" data-filter="mall">Malls</button>
+      <button class="filter-btn" data-filter="estadio">Estadios</button>
+    </div>
+    <div class="projects-grid" id="projectsGrid"></div>
+  </div>
+</section>
+
+<!-- CATALOGO ESTATICO -->
+<div class="catalog-band">
+  <div class="container">
+    <div class="eyebrow">Catálogo estructuras estáticas</div>
+    <div class="catalog-list">
+      <span>Letreros monumentales</span><span>Unipole</span><span>Paletas</span><span>Refugios</span>
+      <span>Tótem</span><span>Sobreterraza</span><span>Terraceros</span><span>Adosados</span>
+      <span>Backlight / Frontlight</span><span>Prismas</span><span>Giros</span>
+      <span>Paraderos de micros y buses</span><span>Mobiliario urbano</span>
+    </div>
+  </div>
+</div>
+
+<!-- MANTENCION -->
+<section id="mantencion">
+  <div class="container maint-grid">
+    <div>
+      <div class="eyebrow">Mantenimiento postventa</div>
+      <h2>No esperes a que tu pantalla falle para darle mantenimiento.</h2>
+      <p style="color:var(--muted);margin-top:16px;">Una pantalla LED es un activo vivo: trabaja todos los días, bajo calor, lluvia, polvo, horas de uso y exigencia constante. Sin mantenimiento, empieza a perder brillo, uniformidad, rendimiento y capacidad de atraer miradas.</p>
+      <div class="maint-features">
+        <div class="maint-feature"><span class="dotm"></span>Limpieza programada</div>
+        <div class="maint-feature"><span class="dotm"></span>Calibración de imagen</div>
+        <div class="maint-feature"><span class="dotm"></span>Revisión eléctrica</div>
+        <div class="maint-feature"><span class="dotm"></span>Recambios en stock</div>
+      </div>
+      <button class="cta-btn" onclick="document.getElementById('contacto').scrollIntoView()">Solicitar plan de mantenimiento</button>
+    </div>
+    <div class="maint-visual">
+      <div class="row"><span>BRILLO</span><span>94%</span></div>
+      <div class="bar"><i style="width:94%"></i></div>
+      <div class="row"><span>UNIFORMIDAD DE PANEL</span><span>98%</span></div>
+      <div class="bar"><i style="width:98%"></i></div>
+      <div class="row"><span>DISPONIBILIDAD OPERATIVA</span><span>99.2%</span></div>
+      <div class="bar"><i style="width:99%"></i></div>
+      <div class="row"><span>PRÓXIMA REVISIÓN</span><span>12 días</span></div>
+      <div class="bar"><i style="width:70%;background:var(--cyan)"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="container contact-grid">
+    <div class="contact-info">
+      <div class="eyebrow">Contacto</div>
+      <h2 style="margin-bottom:24px;">Cuéntanos tu proyecto</h2>
+      <div class="item"><div class="label">Correo</div><div class="val">amedina@publimetal.cl</div></div>
+      <div class="item"><div class="label">Copia siempre a</div><div class="val">publimetal@gmail.com</div></div>
+      <div class="item"><div class="label">Ubicación</div><div class="val">Santiago, Chile</div></div>
+      <div class="item"><div class="label">Atención</div><div class="val">Vía pública, malls, metro y aeropuerto — todo Chile</div></div>
+    </div>
+    <form id="contactForm">
+      <div class="field-row">
+        <div class="field"><label for="nombre">Nombre</label><input id="nombre" required placeholder="Tu nombre"></div>
+        <div class="field"><label for="empresa">Empresa</label><input id="empresa" placeholder="Nombre de la empresa"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label for="email">Correo</label><input id="email" type="email" required placeholder="tu@correo.cl"></div>
+        <div class="field"><label for="telefono">Teléfono</label><input id="telefono" type="tel" placeholder="+56 9 ..."></div>
+      </div>
+      <div class="field">
+        <label for="tipo">Tipo de proyecto</label>
+        <select id="tipo">
+          <option>Diseño estructural pantalla LED</option>
+          <option>Letrero estático de gran formato</option>
+          <option>Fabricación y montaje</option>
+          <option>Plan de mantenimiento</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="mensaje">Cuéntanos brevemente tu proyecto</label>
+        <textarea id="mensaje" rows="4" placeholder="Ubicación, medidas del gabinete, altura del pilar, etc."></textarea>
+      </div>
+      <button type="submit" class="cta-btn" style="width:100%;">Enviar solicitud</button>
+      <p class="form-msg" id="formMsg">✓ Solicitud registrada. Te responderemos a la brevedad a tu correo.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h5>Publimetal</h5>
+        <p style="max-width:220px;">Ingeniería estructural para publicidad exterior e interior. 40 años de experiencia.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Servicios</h5>
+        <a href="#servicios">Pantallas LED</a>
+        <a href="#servicios">Letreros estáticos</a>
+        <a href="#servicios">Fabricación y montaje</a>
+        <a href="#mantencion">Mantenimiento</a>
+      </div>
+      <div class="footer-col">
+        <h5>Empresa</h5>
+        <a href="#nosotros">Nosotros</a>
+        <a href="#proceso">Proceso</a>
+        <a href="#proyectos">Proyectos</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contacto</h5>
+        <p>amedina@publimetal.cl</p>
+        <p>Santiago, Chile</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> Publimetal. Todos los derechos reservados.</span>
+      <span class="mono">Ing. Civil A. Medina Turner — U. de Chile</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// mobile nav
+const burger = document.getElementById('burgerBtn');
+const navLinks = document.getElementById('navLinks');
+burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+// hero bars decoration
+const heroBars = document.getElementById('heroBars');
+for(let i=0;i<10;i++){
+  const bar = document.createElement('i');
+  bar.style.height = (20 + Math.random()*70) + '%';
+  heroBars.appendChild(bar);
+}
+
+// project data
+const projects = [
+  {name:'Parque Arauco Boulevard', client:'Diseñada para Massiva', cat:'mall', tag:'MALL', m2:'42 m²'},
+  {name:'Metro de Santiago', client:'Diseñada para Massiva', cat:'metro', tag:'METRO', m2:'28 m²'},
+  {name:'Aeropuerto de Santiago', client:'Diseñada para Massiva', cat:'aeropuerto', tag:'AEROPUERTO', m2:'65 m²'},
+  {name:'Mall Plaza Los Dominicos', client:'Diseñada para Clear Channel', cat:'mall', tag:'MALL', m2:'36 m²'},
+  {name:'Av. Manquehue', client:'Diseñada para Global', cat:'via', tag:'VÍA PÚBLICA', m2:'54 m²'},
+  {name:'Mall Plaza El Trébol — Concepción', client:'Diseñada para Clear Channel', cat:'mall', tag:'MALL', m2:'48 m²'},
+  {name:'Av. Ossa', client:'Diseñada para JC Decaux', cat:'via', tag:'VÍA PÚBLICA', m2:'40 m²'},
+  {name:'Rotonda Tomás Moro', client:'Diseñada para JC Decaux', cat:'via', tag:'VÍA PÚBLICA', m2:'32 m²'},
+  {name:'Mall Plaza Vespucio', client:'Instalación supervisada — gran formato', cat:'mall', tag:'MALL', m2:'232 m²'},
+  {name:'Estadio La Serena', client:'LED perimetral', cat:'estadio', tag:'ESTADIO', m2:'—'},
+  {name:'Estadio Sausalito — Viña del Mar', client:'LED perimetral', cat:'estadio', tag:'ESTADIO', m2:'—'},
+  {name:'Hipódromo de Chile', client:'LED sector foto ganador', cat:'estadio', tag:'ESTADIO', m2:'—'},
+];
+
+const grid = document.getElementById('projectsGrid');
+projects.forEach(p => {
+  const card = document.createElement('div');
+  card.className = 'project-card show';
+  card.dataset.cat = p.cat;
+  card.innerHTML = `
+    <div class="project-thumb">
+      <span class="project-tag">${p.tag}</span>
+      <div class="frame"><div class="bars">${'<i style="height:'+ (30+Math.random()*60) +'%"></i>'.repeat(6)}</div></div>
+    </div>
+    <div class="project-body">
+      <h4>${p.name}</h4>
+      <div class="client">${p.client}</div>
+      <div class="project-specs"><span>FORMATO <b>${p.m2}</b></span></div>
+    </div>`;
+  grid.appendChild(card);
+});
+
+// filters
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    document.querySelectorAll('.project-card').forEach(card => {
+      const match = f === 'all' || card.dataset.cat === f;
+      card.classList.toggle('show', match);
+    });
+  });
+});
+
+// contact form (client-side only demo)
+document.getElementById('contactForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  document.getElementById('formMsg').classList.add('show');
+  this.reset();
+});
+</script>
+</body>
+</html>
