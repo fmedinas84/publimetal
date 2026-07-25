@@ -159,31 +159,17 @@
     background-size:cover;
     background-position:center;
   }
-  .hero-wrap{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,770px) 1fr;gap:40px;align-items:end}
-  .hero h1{font-size:clamp(38px,5.2vw,68px);line-height:1.02;color:var(--white);max-width:800px}
+  .hero-wrap{position:relative;z-index:2;max-width:1180px}
+  .hero h1{font-size:clamp(38px,5.2vw,68px);line-height:1.02;color:var(--white);max-width:900px}
   .hero h1 span{color:var(--cyan)}
   .hero .lead{color:#D8DFEB;font-size:18px;max-width:660px;margin:24px 0 30px;text-shadow:0 2px 5px rgba(0,0,0,.35)}
   .hero .actions{display:flex;gap:14px;flex-wrap:wrap}
   .stat-row{display:flex;gap:34px;margin-top:48px;flex-wrap:wrap}
   .stat b{display:block;font-family:'Space Grotesk',sans-serif;font-size:28px;color:var(--white)}
   .stat span{font-size:12px;color:var(--muted);font-family:'IBM Plex Mono',monospace;letter-spacing:.05em;text-transform:uppercase}
-  .hero-proof{
-    justify-self:end;
-    width:min(360px,100%);
-    border:1px solid rgba(91,224,232,.35);
-    background:rgba(17,26,44,.8);
-    backdrop-filter:blur(10px);
-    border-radius:var(--radius);
-    padding:22px;
-  }
-  .hero-proof h3{font-size:16px;margin-bottom:12px;color:var(--white)}
-  .proof-list{display:grid;gap:10px}
-  .proof-list span{font-family:'IBM Plex Mono',monospace;font-size:12px;color:#DCE6F5;border-top:1px solid var(--line-soft);padding-top:10px}
   .scroll-hint{position:absolute;left:24px;bottom:18px;color:var(--muted);font-size:12px}
   @media(max-width:980px){
     .hero{min-height:auto;background-position:center right;padding-top:86px}
-    .hero-wrap{grid-template-columns:1fr}
-    .hero-proof{justify-self:start}
   }
 
   .trust-band{padding:34px 0;border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);background:#0C1424}
@@ -261,12 +247,52 @@
   @media(max-width:1000px){.process-strip{grid-template-columns:repeat(3,1fr)}.process-step{border-bottom:1px solid var(--line-soft)}}
   @media(max-width:620px){.process-strip{grid-template-columns:1fr}.process-step{border-right:0}}
 
+  .solutions-section{padding-top:76px}
+  .solutions-head{max-width:760px;margin-bottom:34px}
+  .solutions-head h2{font-size:clamp(30px,3.6vw,46px);color:var(--white);line-height:1.12}
+  .solutions-head p{color:var(--muted);margin-top:16px;font-size:16px;max-width:680px}
+  .solutions-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  .solution-card{
+    background:rgba(17,26,44,.86);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    min-height:430px;
+    padding:32px;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    transition:border-color .2s, transform .2s, box-shadow .2s;
+  }
+  .solution-card:hover{border-color:rgba(91,224,232,.62);transform:translateY(-4px);box-shadow:0 18px 36px rgba(0,0,0,.24)}
+  .solution-card .icon-box{
+    width:54px;
+    height:54px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--amber);
+    margin-bottom:30px;
+    background:rgba(10,15,28,.36);
+  }
+  .solution-card .card-number{position:absolute;top:28px;right:28px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#34445f}
+  .solution-card h3{font-size:22px;color:var(--white);margin-bottom:12px}
+  .solution-card .scope{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.06em;text-transform:none;color:var(--cyan);line-height:1.5;margin-bottom:24px}
+  .solution-card p{font-size:15px;color:var(--muted);margin:0 0 22px}
+  .solution-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-bottom:28px}
+  .solution-tags span{border:1px solid var(--line-soft);border-radius:18px;padding:7px 12px;font-size:12px;color:#B9C4D5;background:rgba(255,255,255,.02)}
+  .solution-link{border-top:1px dashed var(--line);padding-top:24px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--cyan);display:flex;justify-content:space-between;align-items:center}
+  .solution-link::after{content:"+";color:#B9C4D5;font-size:18px;line-height:1}
+  @media(max-width:980px){.solutions-grid{grid-template-columns:1fr}.solution-card{min-height:auto}}
+
+  .projects-section{padding-top:78px}
   .projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
   .project-card{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--bg-panel);transition:transform .2s,border-color .2s;display:none}
   .project-card.show{display:block;animation:fadein .25s ease}
   .project-card:hover{transform:translateY(-3px);border-color:var(--cyan)}
   @keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-  .project-thumb{aspect-ratio:16/10;position:relative;background:#0D1728;overflow:hidden}
+  .project-thumb{aspect-ratio:16/10;position:relative;background:#0D1728;overflow:hidden;cursor:zoom-in}
   .project-thumb img{width:100%;height:100%;object-fit:cover;filter:saturate(.92) contrast(1.03)}
   .project-thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,15,28,.08),rgba(10,15,28,.45))}
   .project-tag{position:absolute;z-index:2;top:12px;left:12px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--cyan);border:1px solid var(--cyan);padding:3px 8px;border-radius:12px;background:rgba(10,15,28,.72)}
@@ -274,8 +300,8 @@
   .project-body h4{font-size:16px;color:var(--white);margin-bottom:4px}
   .project-body .client{font-size:12.5px;color:var(--muted);margin-bottom:10px}
   .project-body p{font-size:13.5px;color:#CFD7E5;margin:0}
-  .project-specs{display:flex;gap:14px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:12px}
-  .project-specs b{color:var(--cyan);font-weight:500}
+  .project-open{position:absolute;z-index:3;right:12px;bottom:12px;width:38px;height:38px;border:1px solid rgba(220,230,245,.52);border-radius:50%;background:rgba(10,15,28,.74);color:var(--white);display:grid;place-items:center;cursor:pointer;transition:background .2s,border-color .2s}
+  .project-open:hover{background:var(--cyan);border-color:var(--cyan);color:#04262a}
   .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px}
   .filter-btn{font-family:'IBM Plex Mono',monospace;font-size:12.5px;padding:9px 16px;border-radius:20px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;transition:all .15s}
   .filter-btn:hover{color:var(--text);border-color:var(--cyan)}
@@ -283,12 +309,19 @@
   @media(max-width:900px){.projects-grid{grid-template-columns:1fr 1fr}}
   @media(max-width:600px){.projects-grid{grid-template-columns:1fr}}
 
-  .specialties-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-  .specialty{border:1px solid var(--line);border-radius:8px;padding:20px;background:rgba(255,255,255,.02)}
-  .specialty h3{font-size:17px;color:var(--white);margin-bottom:8px}
-  .specialty p{font-size:13.5px;color:var(--muted);margin:0}
-  @media(max-width:900px){.specialties-grid{grid-template-columns:1fr 1fr}}
-  @media(max-width:560px){.specialties-grid{grid-template-columns:1fr}}
+  .lightbox{position:fixed;z-index:1000;inset:0;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(3,7,14,.92);backdrop-filter:blur(8px)}
+  .lightbox.open{display:flex}
+  .lightbox-dialog{position:relative;width:min(1120px,100%);max-height:100%;display:flex;align-items:center;justify-content:center}
+  .lightbox-image{display:block;max-width:100%;max-height:calc(100vh - 112px);object-fit:contain;border:1px solid var(--line);border-radius:10px;box-shadow:0 24px 70px rgba(0,0,0,.55)}
+  .lightbox-close,.lightbox-nav{position:absolute;width:44px;height:44px;border:1px solid rgba(220,230,245,.55);border-radius:50%;background:rgba(10,15,28,.84);color:var(--white);display:grid;place-items:center;cursor:pointer;transition:background .2s,border-color .2s}
+  .lightbox-close{top:12px;right:12px}
+  .lightbox-nav{top:50%;transform:translateY(-50%)}
+  .lightbox-prev{left:14px}.lightbox-next{right:14px}
+  .lightbox-close:hover,.lightbox-nav:hover{background:var(--cyan);border-color:var(--cyan);color:#04262a}
+  .lightbox-caption{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);width:min(650px,calc(100% - 48px));padding:11px 16px;border:1px solid var(--line);border-radius:8px;background:rgba(10,15,28,.88);font-family:'IBM Plex Mono',monospace;font-size:12px;text-align:center;color:#DCE6F5}
+  .lightbox-nav[hidden]{display:none}
+  body.lightbox-open{overflow:hidden}
+  @media(max-width:640px){.lightbox{padding:14px}.lightbox-image{max-height:calc(100vh - 132px)}.lightbox-close{top:8px;right:8px}.lightbox-nav{top:auto;bottom:66px;transform:none}.lightbox-prev{left:calc(50% - 52px)}.lightbox-next{right:calc(50% - 52px)}.lightbox-caption{bottom:8px;font-size:10.5px}.project-open{width:36px;height:36px}}
 
   .maint-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
   .maint-features{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:26px 0 30px}
@@ -352,8 +385,8 @@
     <div class="container hero-wrap">
       <div>
         <div class="eyebrow">Publicidad exterior · Ingeniería estructural · 40 años</div>
-        <h1>Ingeniería estructural para instalar <span>publicidad exterior</span> sin improvisar.</h1>
-        <p class="lead">Publimetal evalúa la ubicación, calcula la estructura y respalda técnicamente pantallas LED, letreros y soportes de gran formato para reducir riesgos, permisos rechazados y costos mal planificados.</p>
+        <h1>Desarrollamos proyectos de <span>publicidad exterior</span> de extremo a extremo.</h1>
+        <p class="lead">Ingeniería, fabricación, instalación y soporte continuo para que tu inversión funcione desde el primer día y durante toda su vida útil.</p>
         <div class="actions">
           <button class="cta-btn" data-scroll="contacto">Evaluar mi ubicación</button>
           <button class="cta-btn ghost" data-scroll="proyectos">Ver proyectos diseñados</button>
@@ -361,18 +394,9 @@
         <div class="stat-row" aria-label="Indicadores de experiencia">
           <div class="stat"><b>40+</b><span>Años de experiencia</span></div>
           <div class="stat"><b>400+</b><span>Pantallas diseñadas</span></div>
-          <div class="stat"><b>15-232 m²</b><span>Formatos proyectados</span></div>
+          <div class="stat"><b>De principio a fin</b><span>Un solo respaldo técnico</span></div>
         </div>
       </div>
-      <aside class="hero-proof" aria-label="Prueba de autoridad">
-        <h3>De ubicación a activo publicitario</h3>
-        <div class="proof-list">
-          <span>Viabilidad técnica del emplazamiento</span>
-          <span>Memoria de cálculo y firma profesional</span>
-          <span>Apoyo en permisos y revisión normativa</span>
-          <span>Criterio estructural para proteger la inversión</span>
-        </div>
-      </aside>
     </div>
     <div class="scroll-hint mono">Siguiente: autoridad y experiencia</div>
   </section>
@@ -466,12 +490,57 @@
     </div>
   </section>
 
-  <section id="proyectos">
+  <section class="solutions-section" id="soluciones">
+    <div class="container">
+      <div class="solutions-head">
+        <div class="eyebrow">Qué hacemos</div>
+        <h2>Soluciones para cada etapa de tu proyecto.</h2>
+        <p>Integramos capacidades especializadas para desarrollar proyectos completos de publicidad exterior, desde la ingeniería hasta la mantención, sin fragmentar responsabilidades entre proveedores.</p>
+      </div>
+      <div class="solutions-grid">
+        <article class="solution-card">
+          <div class="card-number">01</div>
+          <div class="icon-box" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="4" y="5" width="16" height="11" rx="1.5" stroke="currentColor" stroke-width="1.6"/><path d="M9 20h6M12 16v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Pantallas LED</h3>
+          <div class="scope">Una solución completa, desde la planificación hasta la mantención.</div>
+          <p>Desarrollamos proyectos de pantallas LED durante todo su ciclo: evaluación, ingeniería, suministro, fabricación de estructuras, instalación, puesta en marcha y soporte técnico continuo.</p>
+          <div class="solution-tags"><span>Ingeniería</span><span>Suministro</span><span>Instalación</span><span>Puesta en marcha</span><span>Mantención</span></div>
+          <a class="solution-link" href="#contacto">Evaluar un proyecto LED</a>
+        </article>
+        <article class="solution-card">
+          <div class="card-number">02</div>
+          <div class="icon-box" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 11.5 12 5l8 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 10.5V19h10v-8.5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M10 19v-5h4v5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Ingeniería estructural</h3>
+          <div class="scope">La base técnica para proyectos seguros, viables y normativamente sólidos.</div>
+          <p>Desarrollamos cálculos, planos, memorias y documentación técnica para asegurar la viabilidad estructural y el cumplimiento normativo de cada proyecto.</p>
+          <div class="solution-tags"><span>Cálculo</span><span>Planos</span><span>Memorias</span><span>Normativa</span></div>
+          <a class="solution-link" href="#contacto">Revisar la viabilidad técnica</a>
+        </article>
+        <article class="solution-card">
+          <div class="card-number">03</div>
+          <div class="icon-box" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="6" y="6" width="12" height="12" rx="1.5" stroke="currentColor" stroke-width="1.6"/><rect x="9.5" y="9.5" width="5" height="5" rx=".8" stroke="currentColor" stroke-width="1.6"/></svg>
+          </div>
+          <h3>Box Modular</h3>
+          <div class="scope">Un soporte modular para instalar, desmontar y trasladar pantallas LED de forma más rápida y eficiente.</div>
+          <p>Sistema estructural modular diseñado para acelerar la instalación de pantallas LED, reducir costos de montaje y facilitar su desmontaje y traslado a nuevas ubicaciones.</p>
+          <div class="solution-tags"><span>Instalación rápida</span><span>Desmontaje</span><span>Traslado</span><span>Reutilización</span></div>
+          <a class="solution-link" href="#contacto">Conocer el sistema modular</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="projects-section" id="proyectos">
     <div class="container">
       <div class="section-head">
         <div class="eyebrow">Proyectos destacados</div>
-        <h2>Experiencia en ubicaciones donde la publicidad exterior tiene que rendir.</h2>
-        <p>Filtra por contexto. Cada emplazamiento exige una lectura técnica, normativa y comercial distinta.</p>
+        <h2>Proyectos desarrollados con respaldo de principio a fin.</h2>
+        <p>Explora distintos contextos. Cada emplazamiento exige una lectura técnica, normativa y comercial propia.</p>
       </div>
       <div class="filters" id="filters">
         <button class="filter-btn active" data-filter="all">Todos</button>
@@ -482,22 +551,6 @@
         <button class="filter-btn" data-filter="estadio">Estadios</button>
       </div>
       <div class="projects-grid" id="projectsGrid"></div>
-    </div>
-  </section>
-
-  <section id="especialidades">
-    <div class="container">
-      <div class="section-head">
-        <div class="eyebrow">Especialidades</div>
-        <h2>Ingeniería para soportes que deben convivir con ciudad, marcas y normativa.</h2>
-        <p>Cada formato tiene exigencias distintas. La diferencia está en anticiparlas antes de fabricar o instalar.</p>
-      </div>
-      <div class="specialties-grid">
-        <article class="specialty"><h3>Pantallas LED</h3><p>Formato, peso, viento, mantención, acceso posterior y continuidad operativa.</p></article>
-        <article class="specialty"><h3>Unipoles y letreros</h3><p>Estructuras expuestas, fundaciones, altura, cargas y seguridad urbana.</p></article>
-        <article class="specialty"><h3>Fachadas y sobreterrazas</h3><p>Anclajes, estructura existente, arquitectura y montaje con restricciones reales.</p></article>
-        <article class="specialty"><h3>Recintos de alto flujo</h3><p>Malls, estadios, metro y aeropuertos, donde la operación no puede improvisarse.</p></article>
-      </div>
     </div>
   </section>
 
@@ -574,6 +627,22 @@
   </section>
 </main>
 
+<div class="lightbox" id="projectLightbox" aria-hidden="true">
+  <div class="lightbox-dialog" role="dialog" aria-modal="true" aria-labelledby="lightboxCaption">
+    <button class="lightbox-close" type="button" aria-label="Cerrar imagen ampliada">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <button class="lightbox-nav lightbox-prev" type="button" aria-label="Ver imagen anterior">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m14 6-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <img class="lightbox-image" src="" alt="">
+    <button class="lightbox-nav lightbox-next" type="button" aria-label="Ver imagen siguiente">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m10 6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <p class="lightbox-caption" id="lightboxCaption"></p>
+  </div>
+</div>
+
 <footer>
   <div class="container">
     <div class="footer-grid">
@@ -631,35 +700,37 @@
   });
 
   const projects = [
-    {name:'Parque Arauco Boulevard', client:'Diseñada para Massiva', cat:'mall', tag:'MALL', m2:'42 m²', img:'images/FT101.jpg', challenge:'Fachada comercial de alta visibilidad con exigencias de soporte, acceso y continuidad urbana.'},
-    {name:'Metro de Santiago', client:'Diseñada para Massiva', cat:'metro', tag:'METRO', m2:'28 m²', img:'images/FT105.jpg', challenge:'Emplazamiento de alto flujo, restricciones de montaje y necesidad de coordinación técnica precisa.'},
-    {name:'Aeropuerto de Santiago', client:'Diseñada para Massiva', cat:'aeropuerto', tag:'AEROPUERTO', m2:'65 m²', img:'images/FT105.jpg', challenge:'Soporte publicitario para recinto operativo, con foco en seguridad, permisos y mínima interferencia.'},
-    {name:'Mall Plaza Los Dominicos', client:'Diseñada para Clear Channel', cat:'mall', tag:'MALL', m2:'36 m²', img:'images/FT101.jpg', challenge:'Integración de pantalla en contexto comercial donde arquitectura, visibilidad y estructura deben conversar.'},
-    {name:'Av. Manquehue', client:'Diseñada para Global', cat:'via', tag:'VÍA PÚBLICA', m2:'54 m²', img:'images/FT101.jpg', challenge:'Exposición urbana a viento, visibilidad y condiciones reales de instalación en vía pública.'},
-    {name:'Mall Plaza El Trébol - Concepción', client:'Diseñada para Clear Channel', cat:'mall', tag:'MALL', m2:'48 m²', img:'images/FT101.jpg', challenge:'Proyecto en centro comercial con coordinación entre soporte, fachada y operación del recinto.'},
-    {name:'Av. Ossa', client:'Diseñada para JCDecaux', cat:'via', tag:'VÍA PÚBLICA', m2:'40 m²', img:'images/FT101.jpg', challenge:'Estructura exterior con lectura técnica de cargas, anclajes y exposición permanente.'},
-    {name:'Rotonda Tomás Moro', client:'Diseñada para JCDecaux', cat:'via', tag:'VÍA PÚBLICA', m2:'32 m²', img:'images/FT101.jpg', challenge:'Ubicación urbana sensible, donde orientación, seguridad y montaje condicionan la solución.'},
-    {name:'Mall Plaza Vespucio', client:'Instalación supervisada - gran formato', cat:'mall', tag:'MALL', m2:'232 m²', img:'images/FT105.jpg', challenge:'Gran formato con exigencia de coordinación entre cálculo, fabricación, montaje y revisión técnica.'},
-    {name:'Estadio La Serena', client:'LED perimetral', cat:'estadio', tag:'ESTADIO', m2:'LED', img:'images/FT102.jpg', challenge:'Recinto deportivo con operación pública y necesidad de estructuras confiables para alta exposición.'},
-    {name:'Estadio Sausalito - Viña del Mar', client:'LED perimetral', cat:'estadio', tag:'ESTADIO', m2:'LED', img:'images/FT104.jpg', challenge:'Pantalla en recinto con público, visibilidad, seguridad y continuidad durante eventos.'},
-    {name:'Hipódromo de Chile', client:'LED sector foto ganador', cat:'estadio', tag:'RECINTO', m2:'LED', img:'images/FT104.jpg', challenge:'Soporte LED en espacio de alta concurrencia, con foco en operación y mantenimiento.'}
+    {name:'Parque Arauco Boulevard', client:'Diseñada para Massiva', cat:'mall', tag:'MALL', images:['images/Mall Parque Arauco  -- Diseñada para Massiva - Restaurantes y Boulevard --  110m2.jpg'], challenge:'Integración de pantalla en un entorno comercial de alto flujo, con exigencias de soporte, acceso y continuidad operativa.'},
+    {name:'Metro Tobalaba', client:'Diseñada para Massiva', cat:'metro', tag:'METRO', images:['images/Metro Tobalaba -- Diseñado para Massiva -  Mega Led curva anden - 73m2.jpg'], challenge:'Proyecto para alto flujo de pasajeros, con restricciones de montaje y coordinación técnica precisa.'},
+    {name:'Aeropuerto de Santiago', client:'Diseñada para Massiva', cat:'aeropuerto', tag:'AEROPUERTO', images:['images/Aeropuerto -- Diseñado para Massiva -  Mega Led - 2x 63m22.jpg','images/Aeropuerto -- Diseñado para Massiva -  Salida estacionamiento - Pantalla  Led 24m2.jpg','images/Aeropuerto -- Diseñado para Massiva -  6 pantallas  Led transparentes y Teleindicador - 6 x13m2.jpg'], challenge:'Soporte publicitario en un recinto operativo, con foco en seguridad, permisos y mínima interferencia.'},
+    {name:'Mall Plaza Vespucio', client:'Diseñada para Global y Clear Channel', cat:'mall', tag:'MALL', images:['images/Mall Plaza Vespucio - Diseñada para Global - Fachada Froilan Roa remodelada ......    230m2.jpg','images/Mall Plaza Vespucio - Diseñada para Clear Channel -   3D Boulevard -- 89m2.jpg','images/Mall Plaza Vespucio - Diseñada para Global -   tragaluz ascensor  -- 74m2.jpg'], challenge:'Coordinación entre cálculo, fabricación, montaje y la operación de un centro comercial activo.'},
+    {name:'Mall Plaza Egaña', client:'Diseñada para Clear Channel', cat:'mall', tag:'MALL', images:['images/Mall Plaza Egaña  -- Diseñado para Clear Channel - interior tiendas  -- 15m2.jpg'], challenge:'Pantalla integrada a un contexto interior donde arquitectura, visibilidad y estructura deben responder como un sistema.'},
+    {name:'Padre Hurtado con Bilbao', client:'Diseñada para Global', cat:'via', tag:'VÍA PÚBLICA', images:['images/Via Pública --Diseñada para Global --  Padre Hurtado  Bilbao--  - Sector Mall  Portal La Reina--  2x15m2.jpg'], challenge:'Estructura exterior diseñada para condiciones reales de viento, visibilidad y montaje en vía pública.'},
+    {name:'Mall Plaza El Trébol', client:'Diseñada para Clear Channel', cat:'via', tag:'VÍA PÚBLICA', images:['images/Via Pública -- Diseñada para Clear Channel --Exterior Mall Plaza El Trebol Concepcion --  -  40m2.jpg'], challenge:'Proyecto de borde comercial que exige coordinación entre soporte, fachada y operación del recinto.'},
+    {name:'Rotonda Tomás Moro', client:'Diseñada para JCDecaux', cat:'via', tag:'VÍA PÚBLICA', images:['images/Via Pública -- Diseñada para  JC Decaux -- Rotonda Tomas Moro-- Diseñada pa JC Decaux - -  15m2.jpg'], challenge:'Ubicación urbana sensible, donde orientación, seguridad y montaje condicionan cada decisión.'},
+    {name:'Metro Plaza Egaña', client:'Diseñada para Massiva', cat:'metro', tag:'METRO', images:['images/Metro Plaza Egaña  -- Diseñado para Massiva - - 2x 17m2.jpg'], challenge:'Solución LED para un punto de alta circulación, pensada para instalarse y operar con control técnico.'},
+    {name:'Metro Los Leones', client:'Diseñada para Massiva', cat:'metro', tag:'METRO', images:['images/Metro Los Leones -- Diseñado para Massiva -  Tunel Led - 2x 17m2.jpg'], challenge:'Pantalla para túnel de conexión, con una respuesta estructural ajustada a la infraestructura existente.'},
+    {name:'Estadio La Serena', client:'Diseñada para Led Studio', cat:'estadio', tag:'ESTADIO', images:['images/Estadio La Serena -- Diseñado para Led Studio - 33m2.jpg'], challenge:'Estructura para un recinto deportivo expuesto a público, eventos y exigencias de continuidad.'},
+    {name:'Estadio Sausalito', client:'Diseñada para Led Studio', cat:'estadio', tag:'ESTADIO', images:['images/Estadio Sausalito -- Diseñado para Led Studio -   -- 71m2.jpg'], challenge:'Proyecto LED para operación en eventos, donde visibilidad, seguridad y confiabilidad son inseparables.'}
   ];
 
   const grid = document.getElementById('projectsGrid');
-  projects.forEach(project => {
+  projects.forEach((project, projectIndex) => {
     const card = document.createElement('article');
     card.className = 'project-card show';
     card.dataset.cat = project.cat;
     card.innerHTML = `
-      <div class="project-thumb">
-        <img src="${project.img}" alt="${project.name}">
+      <div class="project-thumb" role="button" tabindex="0" data-project-index="${projectIndex}" aria-label="Ampliar imágenes de ${project.name}">
+        <img src="${project.images[0]}" alt="${project.name}" loading="lazy" decoding="async">
         <span class="project-tag">${project.tag}</span>
+        <span class="project-open" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="5.5" stroke="currentColor" stroke-width="1.7"/><path d="m15 15 5 5M10.5 7.5v6M7.5 10.5h6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        </span>
       </div>
       <div class="project-body">
         <h4>${project.name}</h4>
         <div class="client">${project.client}</div>
         <p>${project.challenge}</p>
-        <div class="project-specs"><span>FORMATO <b>${project.m2}</b></span></div>
       </div>`;
     grid.appendChild(card);
   });
@@ -673,6 +744,77 @@
         card.classList.toggle('show', filter === 'all' || card.dataset.cat === filter);
       });
     });
+  });
+
+  const lightbox = document.getElementById('projectLightbox');
+  const lightboxImage = lightbox.querySelector('.lightbox-image');
+  const lightboxCaption = lightbox.querySelector('.lightbox-caption');
+  const closeLightboxButton = lightbox.querySelector('.lightbox-close');
+  const previousImageButton = lightbox.querySelector('.lightbox-prev');
+  const nextImageButton = lightbox.querySelector('.lightbox-next');
+  let activeProjectIndex = 0;
+  let activeImageIndex = 0;
+  let lastFocusedElement = null;
+
+  const updateLightboxImage = () => {
+    const project = projects[activeProjectIndex];
+    const imageCount = project.images.length;
+    lightboxImage.src = project.images[activeImageIndex];
+    lightboxImage.alt = `${project.name} — imagen ${activeImageIndex + 1} de ${imageCount}`;
+    lightboxCaption.textContent = imageCount > 1
+      ? `${project.name} · ${activeImageIndex + 1} de ${imageCount}`
+      : project.name;
+    previousImageButton.hidden = imageCount < 2;
+    nextImageButton.hidden = imageCount < 2;
+  };
+
+  const openLightbox = projectIndex => {
+    activeProjectIndex = projectIndex;
+    activeImageIndex = 0;
+    lastFocusedElement = document.activeElement;
+    updateLightboxImage();
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('lightbox-open');
+    closeLightboxButton.focus();
+  };
+
+  const closeLightbox = () => {
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('lightbox-open');
+    lightboxImage.removeAttribute('src');
+    if (lastFocusedElement) lastFocusedElement.focus();
+  };
+
+  const showAdjacentImage = direction => {
+    const images = projects[activeProjectIndex].images;
+    activeImageIndex = (activeImageIndex + direction + images.length) % images.length;
+    updateLightboxImage();
+  };
+
+  document.querySelectorAll('.project-thumb').forEach(thumb => {
+    const openFromThumbnail = () => openLightbox(Number(thumb.dataset.projectIndex));
+    thumb.addEventListener('click', openFromThumbnail);
+    thumb.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openFromThumbnail();
+      }
+    });
+  });
+
+  closeLightboxButton.addEventListener('click', closeLightbox);
+  previousImageButton.addEventListener('click', () => showAdjacentImage(-1));
+  nextImageButton.addEventListener('click', () => showAdjacentImage(1));
+  lightbox.addEventListener('click', event => {
+    if (event.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', event => {
+    if (!lightbox.classList.contains('open')) return;
+    if (event.key === 'Escape') closeLightbox();
+    if (event.key === 'ArrowLeft' && !previousImageButton.hidden) showAdjacentImage(-1);
+    if (event.key === 'ArrowRight' && !nextImageButton.hidden) showAdjacentImage(1);
   });
 
   document.getElementById('contactForm').addEventListener('submit', event => {
