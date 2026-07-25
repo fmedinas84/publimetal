@@ -282,6 +282,11 @@
   .solution-card p{font-size:15px;color:var(--muted);margin:0 0 22px}
   .solution-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-bottom:28px}
   .solution-tags span{border:1px solid var(--line-soft);border-radius:18px;padding:7px 12px;font-size:12px;color:#B9C4D5;background:rgba(255,255,255,.02)}
+  .solution-media{position:relative;width:100%;height:132px;margin:0 0 20px;padding:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#D6D7D0;cursor:zoom-in;display:block}
+  .solution-media img{width:100%;height:100%;object-fit:contain;display:block;transition:transform .25s ease}
+  .solution-media:hover{border-color:rgba(91,224,232,.65)}
+  .solution-media:hover img{transform:scale(1.025)}
+  .solution-media span{position:absolute;right:9px;bottom:9px;padding:6px 9px;border:1px solid rgba(220,230,245,.38);border-radius:5px;background:rgba(10,15,28,.84);font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--white);letter-spacing:.02em}
   .solution-link{border-top:1px dashed var(--line);padding-top:24px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--cyan);display:flex;justify-content:space-between;align-items:center}
   .solution-link::after{content:"+";color:#B9C4D5;font-size:18px;line-height:1}
   @media(max-width:980px){.solutions-grid{grid-template-columns:1fr}.solution-card{min-height:auto}}
@@ -312,6 +317,8 @@
   .lightbox{position:fixed;z-index:1000;inset:0;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(3,7,14,.92);backdrop-filter:blur(8px)}
   .lightbox.open{display:flex}
   .lightbox-dialog{position:relative;width:min(1120px,100%);max-height:100%;display:flex;align-items:center;justify-content:center}
+  .lightbox.open .lightbox-dialog{animation:lightbox-in .18s ease-out}
+  @keyframes lightbox-in{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:scale(1)}}
   .lightbox-image{display:block;max-width:100%;max-height:calc(100vh - 112px);object-fit:contain;border:1px solid var(--line);border-radius:10px;box-shadow:0 24px 70px rgba(0,0,0,.55)}
   .lightbox-close,.lightbox-nav{position:absolute;width:44px;height:44px;border:1px solid rgba(220,230,245,.55);border-radius:50%;background:rgba(10,15,28,.84);color:var(--white);display:grid;place-items:center;cursor:pointer;transition:background .2s,border-color .2s}
   .lightbox-close{top:12px;right:12px}
@@ -367,8 +374,8 @@
       Publimetal
     </a>
     <div class="nav-links" id="navLinks">
-      <a href="#autoridad">Autoridad</a>
-      <a href="#riesgos">Riesgos</a>
+      <a href="#autoridad">Respaldo</a>
+      <a href="#riesgos">Qué riesgos debo evitar</a>
       <a href="#decisiones">Qué resolvemos</a>
       <a href="#proyectos">Proyectos</a>
       <a href="#contacto" class="cta-btn">Evaluar ubicación</a>
@@ -398,7 +405,6 @@
         </div>
       </div>
     </div>
-    <div class="scroll-hint mono">Siguiente: autoridad y experiencia</div>
   </section>
 
   <section class="trust-band" aria-label="Clientes que han confiado en Publimetal">
@@ -420,10 +426,10 @@
   <section id="autoridad">
     <div class="container authority-grid">
       <div>
-        <div class="eyebrow">Autoridad técnica</div>
+        <div class="eyebrow">Respaldo técnico</div>
         <h2>Antes de vender un servicio, Publimetal asume una responsabilidad estructural.</h2>
         <p style="color:var(--muted);margin-top:16px">La publicidad exterior de gran formato no falla en una presentación: falla en terreno, con viento, permisos, montaje, inversión y marcas esperando operar. Por eso cada proyecto necesita criterio técnico desde el inicio.</p>
-        <p style="color:var(--muted)">Publimetal es liderada por Alejandro Medina Turner, Ingeniero Civil de la Universidad de Chile, con más de cuatro décadas proyectando estructuras para pantallas LED, letreros monumentales, unipoles, sobreterrazas, mobiliario urbano y estructuras especiales.</p>
+        <p style="color:var(--muted)">Alejandro Medina Turner, dueño de Publimetal e Ingeniero Civil de la Universidad de Chile, cuenta con más de 40 años de experiencia en estructuras para publicidad exterior.</p>
         <div class="authority-points">
           <div class="authority-point"><b>U. de Chile</b><span>Ingeniero Civil responsable del criterio estructural.</span></div>
           <div class="authority-point"><b>40 años</b><span>Experiencia acumulada en proyectos de publicidad exterior.</span></div>
@@ -442,7 +448,7 @@
     <div class="grid-bg"></div>
     <div class="container">
       <div class="section-head">
-        <div class="eyebrow">Riesgo evitado</div>
+        <div class="eyebrow">Qué riesgos debes evitar</div>
         <h2>Una pantalla no es solo una compra: es una inversión expuesta.</h2>
         <p>El costo real aparece cuando una ubicación no sirve, un permiso se detiene, una estructura se recalcula tarde o una instalación obliga a improvisar en obra.</p>
       </div>
@@ -528,6 +534,10 @@
           <h3>Box Modular</h3>
           <div class="scope">Un soporte modular para instalar, desmontar y trasladar pantallas LED de forma más rápida y eficiente.</div>
           <p>Sistema estructural modular diseñado para acelerar la instalación de pantallas LED, reducir costos de montaje y facilitar su desmontaje y traslado a nuevas ubicaciones.</p>
+          <button class="solution-media" type="button" data-lightbox-src="images/box modular.jpeg" data-lightbox-alt="Sistema Box Modular para instalación de pantallas LED desarrollado por Publimetal." data-lightbox-caption="Sistema Box Modular" aria-label="Ver en detalle el sistema Box Modular">
+            <img src="images/box modular.jpeg" alt="Sistema Box Modular para instalación de pantallas LED desarrollado por Publimetal." loading="lazy" decoding="async">
+            <span>Ver en detalle →</span>
+          </button>
           <div class="solution-tags"><span>Instalación rápida</span><span>Desmontaje</span><span>Traslado</span><span>Reutilización</span></div>
           <a class="solution-link" href="#contacto">Conocer el sistema modular</a>
         </article>
@@ -659,7 +669,7 @@
       </div>
       <div class="footer-col">
         <h5>Empresa</h5>
-        <a href="#autoridad">Autoridad</a>
+        <a href="#autoridad">Respaldo</a>
         <a href="#proceso">Proceso</a>
         <a href="#proyectos">Proyectos</a>
         <a href="#contacto">Contacto</a>
@@ -752,24 +762,29 @@
   const closeLightboxButton = lightbox.querySelector('.lightbox-close');
   const previousImageButton = lightbox.querySelector('.lightbox-prev');
   const nextImageButton = lightbox.querySelector('.lightbox-next');
-  let activeProjectIndex = 0;
   let activeImageIndex = 0;
   let lastFocusedElement = null;
+  let lightboxImages = [];
+  let lightboxTitle = '';
+  let lightboxAlt = '';
 
   const updateLightboxImage = () => {
-    const project = projects[activeProjectIndex];
-    const imageCount = project.images.length;
-    lightboxImage.src = project.images[activeImageIndex];
-    lightboxImage.alt = `${project.name} — imagen ${activeImageIndex + 1} de ${imageCount}`;
+    const imageCount = lightboxImages.length;
+    lightboxImage.src = lightboxImages[activeImageIndex];
+    lightboxImage.alt = imageCount > 1
+      ? `${lightboxAlt} — imagen ${activeImageIndex + 1} de ${imageCount}`
+      : lightboxAlt;
     lightboxCaption.textContent = imageCount > 1
-      ? `${project.name} · ${activeImageIndex + 1} de ${imageCount}`
-      : project.name;
+      ? `${lightboxTitle} · ${activeImageIndex + 1} de ${imageCount}`
+      : lightboxTitle;
     previousImageButton.hidden = imageCount < 2;
     nextImageButton.hidden = imageCount < 2;
   };
 
-  const openLightbox = projectIndex => {
-    activeProjectIndex = projectIndex;
+  const openLightbox = ({images, title, alt}) => {
+    lightboxImages = images;
+    lightboxTitle = title;
+    lightboxAlt = alt;
     activeImageIndex = 0;
     lastFocusedElement = document.activeElement;
     updateLightboxImage();
@@ -788,19 +803,31 @@
   };
 
   const showAdjacentImage = direction => {
-    const images = projects[activeProjectIndex].images;
-    activeImageIndex = (activeImageIndex + direction + images.length) % images.length;
+    activeImageIndex = (activeImageIndex + direction + lightboxImages.length) % lightboxImages.length;
     updateLightboxImage();
   };
 
   document.querySelectorAll('.project-thumb').forEach(thumb => {
-    const openFromThumbnail = () => openLightbox(Number(thumb.dataset.projectIndex));
+    const openFromThumbnail = () => {
+      const project = projects[Number(thumb.dataset.projectIndex)];
+      openLightbox({images:project.images, title:project.name, alt:project.name});
+    };
     thumb.addEventListener('click', openFromThumbnail);
     thumb.addEventListener('keydown', event => {
       if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
         openFromThumbnail();
       }
+    });
+  });
+
+  document.querySelectorAll('[data-lightbox-src]').forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      openLightbox({
+        images:[trigger.dataset.lightboxSrc],
+        title:trigger.dataset.lightboxCaption,
+        alt:trigger.dataset.lightboxAlt
+      });
     });
   });
 
