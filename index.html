@@ -120,7 +120,16 @@
     cursor:pointer;
     transition:background .15s, transform .1s;
   }
-  .cta-btn:hover{background:#ffa25e}
+    .cta-btn:hover{background:#ffa25e}
+    .nav-links .cta-btn{
+      background:#1a8b93;
+      color:#fff;
+      box-shadow:0 8px 22px rgba(0,0,0,.28);
+    }
+    .nav-links .cta-btn:hover{
+      background:#14747b;
+      color:#fff;
+    }
   .cta-btn:active{transform:scale(.98)}
   .cta-btn.ghost{background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--text)}
   .cta-btn.ghost:hover{border-color:var(--cyan);background:rgba(91,224,232,.07)}
@@ -410,7 +419,7 @@
       <a href="#riesgos">Qué riesgos debo evitar</a>
       <a href="#decisiones">Qué resolvemos</a>
       <a href="#proyectos">Proyectos</a>
-      <a href="#contacto" class="cta-btn">Evaluar ubicación</a>
+        <a href="#contacto" class="cta-btn">Contáctenme</a>
     </div>
     <button class="burger" id="burgerBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks">
       <svg width="20" height="14" viewBox="0 0 20 14" fill="none" aria-hidden="true"><path d="M0 1H20M0 7H20M0 13H20" stroke="currentColor" stroke-width="1.5"/></svg>
@@ -628,7 +637,6 @@
         <div class="item"><div class="label">Correo</div><div class="val">amedina@publimetal.cl</div></div>
         <div class="item"><div class="label">Copia siempre a</div><div class="val">publimetal@gmail.com</div></div>
         <div class="item"><div class="label">Ubicación</div><div class="val">Santiago, Chile</div></div>
-        <div class="item"><div class="label">Cobertura</div><div class="val">Vía pública, malls, metro, aeropuertos y recintos de alto flujo en Chile</div></div>
         <div class="contact-note">Mientras más concreta sea la ubicación, más rápido podemos detectar restricciones, oportunidades y próximos pasos.</div>
       </div>
       <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
@@ -663,8 +671,7 @@
           <label for="mensaje">Cuéntanos brevemente tu proyecto</label>
           <textarea id="mensaje" name="mensaje" rows="4" required placeholder="Medidas aproximadas, altura, tipo de soporte, etapa del proyecto, fechas importantes."></textarea>
         </div>
-        <button type="submit" class="cta-btn" style="width:100%">Solicitar evaluación inicial</button>
-        <p class="microcopy">Te responderemos indicando qué información falta, qué restricciones revisar y cuál podría ser el siguiente paso técnico.</p>
+            <button type="submit" class="cta-btn" style="width:100%">Quiero que me contacten</button>
         <p class="form-msg" id="formMsg">Solicitud registrada. Te responderemos a la brevedad a tu correo.</p>
       </form>
     </div>
