@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trayectoria | Publimetal</title>
+  <meta name="description" content="Una selección de proyectos que refleja más de cuatro décadas de experiencia de Publimetal en publicidad exterior.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="site-nav" aria-label="Navegación principal">
+      <a class="logo" href="../index.html" aria-label="Ir a la página principal de Publimetal">
+        <span class="logo-mark">PM</span>
+        Publimetal
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="../index.html#autoridad">Respaldo</a>
+        <a href="../index.html#decisiones">Qué resolvemos</a>
+        <a href="../index.html#proyectos">Proyectos</a>
+        <a href="./" aria-current="page">Trayectoria</a>
+        <a href="../index.html#contacto" class="button button-nav">Contáctenme</a>
+      </div>
+      <button class="menu-button" id="menuButton" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks">
+        <svg width="20" height="14" viewBox="0 0 20 14" fill="none" aria-hidden="true">
+          <path d="M0 1H20M0 7H20M0 13H20" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="history-hero">
+      <div class="history-hero-media" aria-hidden="true"></div>
+      <div class="history-hero-overlay" aria-hidden="true"></div>
+      <div class="grid-background" aria-hidden="true"></div>
+      <div class="container history-hero-content">
+        <p class="eyebrow">Trayectoria · 1980 — actualidad</p>
+        <h1>Más de cuatro décadas creando <span>presencia en la ciudad.</span></h1>
+        <p class="hero-lead">Una trayectoria construida proyecto a proyecto, resolviendo estructuras para publicidad exterior en contextos urbanos de alta exigencia.</p>
+        <a class="text-link" href="#catalogo">Explorar proyectos <span aria-hidden="true">↓</span></a>
+      </div>
+    </section>
+
+    <section class="trajectory-intro" aria-labelledby="trajectory-title">
+      <div class="container intro-grid">
+        <div>
+          <p class="eyebrow">Experiencia acumulada</p>
+          <h2 id="trajectory-title">Cada proyecto amplía lo que sabemos hacer.</h2>
+        </div>
+        <div class="intro-copy">
+          <p>Desde 1980, Publimetal desarrolla soluciones para publicidad exterior, desde estructuras urbanas y soportes especiales hasta proyectos de pantallas LED.</p>
+          <p>Este catálogo reúne una selección en crecimiento de proyectos realizados en calles, centros comerciales, aeropuertos, metro y recintos de alta concurrencia.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="catalog-section" id="catalogo" aria-labelledby="catalog-title">
+      <div class="container">
+        <div class="catalog-heading">
+          <div>
+            <p class="eyebrow">Archivo de proyectos</p>
+            <h2 id="catalog-title">Un catálogo preparado para seguir creciendo.</h2>
+          </div>
+          <p>Filtra por período o contexto. Los proyectos sin fecha validada se mantienen visibles sin asignarles información provisional.</p>
+        </div>
+
+        <div class="catalog-toolbar" aria-label="Filtros del catálogo">
+          <div class="filter-field">
+            <label for="decadeFilter">Década</label>
+            <select id="decadeFilter">
+              <option value="all">Todas las décadas</option>
+              <option value="2020-actualidad">2020 — actualidad</option>
+              <option value="2010-2019">2010 — 2019</option>
+              <option value="2000-2009">2000 — 2009</option>
+              <option value="1990-1999">1990 — 1999</option>
+              <option value="1980-1989">1980 — 1989</option>
+              <option value="sin-fecha">Fecha por documentar</option>
+            </select>
+          </div>
+          <div class="filter-field">
+            <label for="yearFilter">Año</label>
+            <select id="yearFilter">
+              <option value="all">Todos los años</option>
+            </select>
+          </div>
+          <div class="filter-field">
+            <label for="categoryFilter">Categoría</label>
+            <select id="categoryFilter">
+              <option value="all">Todas las categorías</option>
+            </select>
+          </div>
+          <div class="filter-field">
+            <label for="sortOrder">Orden</label>
+            <select id="sortOrder">
+              <option value="desc">Más recientes primero</option>
+              <option value="asc">Más antiguos primero</option>
+            </select>
+          </div>
+          <button class="reset-button" id="resetFilters" type="button">Limpiar filtros</button>
+        </div>
+
+        <div class="catalog-status" id="catalogStatus" role="status" aria-live="polite"></div>
+        <div id="catalogGroups"></div>
+        <div class="empty-state" id="emptyState" hidden>
+          <p class="eyebrow">Sin resultados</p>
+          <h3>No hay proyectos documentados con estos filtros.</h3>
+          <p>Prueba otra década o categoría para continuar explorando.</p>
+          <button class="button button-secondary" type="button" data-reset-filters>Ver todos los proyectos</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="history-close">
+      <div class="grid-background" aria-hidden="true"></div>
+      <div class="container close-panel">
+        <div>
+          <p class="eyebrow">El próximo proyecto</p>
+          <h2>La experiencia acumulada se pone al servicio de lo que viene.</h2>
+        </div>
+        <a class="button" href="../index.html#contacto">Quiero que me contacten</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-column">
+          <h2>Publimetal</h2>
+          <p>Ingeniería estructural para publicidad exterior. Santiago, Chile. Más de cuatro décadas de experiencia.</p>
+        </div>
+        <div class="footer-column">
+          <h3>Explorar</h3>
+          <a href="../index.html#decisiones">Qué resolvemos</a>
+          <a href="../index.html#proyectos">Proyectos destacados</a>
+          <a href="./">Trayectoria</a>
+        </div>
+        <div class="footer-column">
+          <h3>Contacto</h3>
+          <a href="mailto:amedina@publimetal.cl">amedina@publimetal.cl</a>
+          <p>Santiago, Chile</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="currentYear"></span> Publimetal. Todos los derechos reservados.</span>
+        <span class="mono">Ing. Civil A. Medina Turner · U. de Chile</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="projects-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
