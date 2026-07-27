@@ -2,7 +2,7 @@ import {
   buildProjectImageUrl,
   buildProjectLightboxImageUrl,
   fetchPublishedProjects,
-} from './sanity-client.js'
+} from './sanity-client.js?v=20260727-1'
 
 let projects = []
 let emptyActionMode = 'reset'
