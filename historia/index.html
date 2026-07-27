@@ -107,9 +107,9 @@
         <div id="catalogGroups"></div>
         <div class="empty-state" id="emptyState" hidden>
           <p class="eyebrow">Sin resultados</p>
-          <h3>No hay proyectos documentados con estos filtros.</h3>
-          <p>Prueba otra década o categoría para continuar explorando.</p>
-          <button class="button button-secondary" type="button" data-reset-filters>Ver todos los proyectos</button>
+          <h3 id="emptyTitle">No hay proyectos documentados con estos filtros.</h3>
+          <p id="emptyDescription">Prueba otra década o categoría para continuar explorando.</p>
+          <button class="button button-secondary" id="emptyAction" type="button">Ver todos los proyectos</button>
         </div>
       </div>
     </section>
@@ -152,7 +152,6 @@
     </div>
   </footer>
 
-  <script src="projects-data.js"></script>
-  <script src="app.js"></script>
+  <script type="module" src="app.js"></script>
 </body>
 </html>
