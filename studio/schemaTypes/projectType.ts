@@ -4,7 +4,7 @@ const currentYear = new Date().getFullYear()
 
 export const projectType = defineType({
   name: 'project',
-  title: 'Proyecto',
+  title: 'Proyectos',
   type: 'document',
   groups: [
     {name: 'content', title: 'Contenido', default: true},
