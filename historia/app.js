@@ -27,15 +27,6 @@ const categoryLabels = {
   movil: 'Móvil',
   otro: 'Otro',
 }
-const decadeOrder = ['2020-actualidad', '2010-2019', '2000-2009', '1990-1999', '1980-1989', 'sin-fecha']
-const decadeLabels = {
-  '2020-actualidad': '2020 — actualidad',
-  '2010-2019': '2010 — 2019',
-  '2000-2009': '2000 — 2009',
-  '1990-1999': '1990 — 1999',
-  '1980-1989': '1980 — 1989',
-  'sin-fecha': 'Fecha por documentar',
-}
 
 function slugify(value) {
   return value
@@ -230,47 +221,10 @@ function renderCatalog() {
     return
   }
 
-  const groupedProjects = filteredProjects.reduce((groups, project) => {
-    const decade = getDecade(project)
-    if (!groups.has(decade)) groups.set(decade, [])
-    groups.get(decade).push(project)
-    return groups
-  }, new Map())
-
-  const orderedDecades = decadeOrder
-    .filter((decade) => groupedProjects.has(decade))
-    .sort((first, second) => {
-      if (first === 'sin-fecha') return 1
-      if (second === 'sin-fecha') return -1
-      const direction = sortOrder.value === 'asc' ? -1 : 1
-      return (decadeOrder.indexOf(first) - decadeOrder.indexOf(second)) * direction
-    })
-
-  orderedDecades.forEach((decade) => {
-    const section = document.createElement('section')
-    section.className = 'decade-group'
-    section.setAttribute('aria-labelledby', `decade-${decade}`)
-
-    const header = document.createElement('div')
-    header.className = 'decade-heading'
-
-    const title = document.createElement('h3')
-    title.id = `decade-${decade}`
-    title.textContent = decadeLabels[decade] || decade
-
-    const count = document.createElement('span')
-    const total = groupedProjects.get(decade).length
-    count.className = 'mono'
-    count.textContent = `${total} ${total === 1 ? 'proyecto' : 'proyectos'}`
-
-    const grid = document.createElement('div')
-    grid.className = 'history-grid'
-    groupedProjects.get(decade).forEach((project) => grid.append(createProjectCard(project)))
-
-    header.append(title, count)
-    section.append(header, grid)
-    catalogGroups.append(section)
-  })
+  const grid = document.createElement('div')
+  grid.className = 'history-grid'
+  filteredProjects.forEach((project) => grid.append(createProjectCard(project)))
+  catalogGroups.append(grid)
 }
 
 function clearFilters() {
