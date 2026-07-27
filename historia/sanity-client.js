@@ -26,6 +26,13 @@ export const projectsQuery = `
         crop,
         hotspot,
         alt
+      },
+      gallery[] {
+        asset,
+        crop,
+        hotspot,
+        alt,
+        caption
       }
     }
 `
@@ -42,6 +49,18 @@ export function buildProjectImageUrl(source) {
     .fit('crop')
     .auto('format')
     .quality(85)
+    .url()
+}
+
+export function buildProjectLightboxImageUrl(source) {
+  if (!source?.asset) return ''
+
+  return imageBuilder
+    .image(source)
+    .width(1800)
+    .fit('max')
+    .auto('format')
+    .quality(90)
     .url()
 }
 
