@@ -221,26 +221,6 @@
   @media(max-width:980px){.risk-grid{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:580px){.risk-grid{grid-template-columns:1fr}}
 
-  .needs-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
-  .need-card{
-    background:var(--bg-panel);
-    border:1px solid var(--line);
-    border-radius:var(--radius);
-    padding:24px 18px;
-    min-height:270px;
-    display:flex;
-    flex-direction:column;
-    transition:border-color .2s, transform .2s, box-shadow .2s;
-  }
-  .need-card:hover{border-color:var(--cyan);transform:translateY(-3px);box-shadow:0 14px 30px rgba(0,0,0,.22)}
-  .need-card .idx{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--cyan);margin-bottom:18px}
-  .need-card h3{font-size:18px;color:var(--white);margin-bottom:12px}
-  .need-card p{font-size:13.5px;color:var(--muted);margin:0 0 18px}
-  .need-card .result{margin:auto 0 0;padding-top:14px;border-top:1px solid var(--line-soft);font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#DCE6F5}
-  @media(max-width:1100px){.needs-grid{grid-template-columns:repeat(3,1fr)}}
-  @media(max-width:760px){.needs-grid{grid-template-columns:1fr 1fr}}
-  @media(max-width:560px){.needs-grid{grid-template-columns:1fr}}
-
   .process-strip{
     display:grid;
     grid-template-columns:repeat(6,1fr);
@@ -254,8 +234,17 @@
   .process-step .n{font-family:'IBM Plex Mono',monospace;color:var(--cyan);font-size:12px;margin-bottom:14px}
   .process-step h4{font-size:16px;color:var(--white);margin-bottom:8px}
   .process-step p{font-size:13px;color:var(--muted);margin:0}
-  @media(max-width:1000px){.process-strip{grid-template-columns:repeat(3,1fr)}.process-step{border-bottom:1px solid var(--line-soft)}}
-  @media(max-width:620px){.process-strip{grid-template-columns:1fr}.process-step{border-right:0}}
+  @media(max-width:1000px){
+    .process-strip{grid-template-columns:repeat(3,1fr)}
+    .process-step{border-bottom:1px solid var(--line-soft)}
+    .process-step:nth-child(3n){border-right:0}
+    .process-step:nth-child(n+4){border-bottom:0}
+  }
+  @media(max-width:620px){
+    .process-strip{grid-template-columns:1fr}
+    .process-step{border-right:0;border-bottom:1px solid var(--line-soft)}
+    .process-step:last-child{border-bottom:0}
+  }
 
   .solutions-section{padding-top:76px}
   .solutions-head{max-width:760px;margin-bottom:34px}
@@ -417,7 +406,7 @@
     <div class="nav-links" id="navLinks">
       <a href="#autoridad">Respaldo</a>
       <a href="#riesgos">Qué riesgos debo evitar</a>
-      <a href="#decisiones">Qué resolvemos</a>
+      <a href="#decisiones">Cómo trabajamos</a>
       <a href="#proyectos">Proyectos</a>
       <a href="historia/">Trayectoria</a>
         <a href="#contacto" class="cta-btn">Contáctenme</a>
@@ -508,34 +497,17 @@
   <section id="decisiones">
     <div class="container">
       <div class="section-head">
-        <div class="eyebrow">Qué resolvemos</div>
-        <h2>Servicios ordenados por la decisión que necesitas tomar.</h2>
-        <p>El cliente no compra planos: compra certeza para instalar, operar y rentabilizar una pantalla o soporte publicitario.</p>
-      </div>
-      <div class="needs-grid">
-        <article class="need-card"><div class="idx">01</div><h3>Tengo una ubicación</h3><p>Revisamos emplazamiento, estructura existente, restricciones y condiciones reales de instalación.</p><div class="result">Resultado: saber si vale la pena avanzar.</div></article>
-        <article class="need-card"><div class="idx">02</div><h3>Necesito permisos</h3><p>Preparamos información técnica para respaldar revisiones municipales, viales o normativas.</p><div class="result">Resultado: documentación defendible.</div></article>
-        <article class="need-card"><div class="idx">03</div><h3>Debo diseñar la estructura</h3><p>Calculamos según viento, cargas, anclajes, altura, formato y normativa aplicable.</p><div class="result">Resultado: planos, memoria y firma.</div></article>
-        <article class="need-card"><div class="idx">04</div><h3>Quiero llegar bien a obra</h3><p>Alineamos diseño, fabricación, montaje y supervisión técnica para disminuir ajustes en terreno.</p><div class="result">Resultado: instalación más controlada.</div></article>
-        <article class="need-card"><div class="idx">05</div><h3>Debe seguir operando</h3><p>Diseñamos mantenimiento preventivo y correctivo para proteger continuidad, imagen y seguridad.</p><div class="result">Resultado: menos detenciones.</div></article>
-      </div>
-    </div>
-  </section>
-
-  <section id="proceso">
-    <div class="container">
-      <div class="section-head">
-        <div class="eyebrow">Proceso</div>
-        <h2>Un camino claro desde la oportunidad hasta la operación.</h2>
-        <p>Reducimos la complejidad técnica a una secuencia comprensible para tomar decisiones más rápido.</p>
+        <div class="eyebrow">Cómo trabajamos</div>
+        <h2>Un proceso claro desde la evaluación hasta la operación.</h2>
+        <p>Acompañamos cada etapa para reducir riesgos, ordenar decisiones y llegar a una solución técnicamente viable.</p>
       </div>
       <div class="process-strip">
-        <article class="process-step"><div class="n">01</div><h4>Revisamos ubicación</h4><p>Entendemos formato, entorno, altura, accesos y objetivo comercial.</p></article>
-        <article class="process-step"><div class="n">02</div><h4>Detectamos restricciones</h4><p>Identificamos riesgos técnicos, normativos y constructivos antes de invertir más.</p></article>
-        <article class="process-step"><div class="n">03</div><h4>Definimos viabilidad</h4><p>Aterrizamos el formato posible y los próximos pasos para avanzar con criterio.</p></article>
-        <article class="process-step"><div class="n">04</div><h4>Calculamos y documentamos</h4><p>Desarrollamos planos, memoria de cálculo y respaldo profesional.</p></article>
-        <article class="process-step"><div class="n">05</div><h4>Acompañamos obra</h4><p>Conectamos ingeniería, fabricación, montaje y revisión técnica en terreno.</p></article>
-        <article class="process-step"><div class="n">06</div><h4>Protegemos operación</h4><p>Planificamos mantenimiento para cuidar continuidad y rendimiento del activo.</p></article>
+        <article class="process-step"><div class="n">01</div><h4>Evaluamos la ubicación</h4><p>Revisamos el entorno, el formato, la altura, los accesos y las condiciones reales de instalación.</p></article>
+        <article class="process-step"><div class="n">02</div><h4>Detectamos restricciones</h4><p>Identificamos riesgos estructurales, normativos, constructivos y operativos antes de avanzar.</p></article>
+        <article class="process-step"><div class="n">03</div><h4>Definimos la viabilidad</h4><p>Determinamos qué solución puede ejecutarse y qué antecedentes se necesitan para respaldarla.</p></article>
+        <article class="process-step"><div class="n">04</div><h4>Diseñamos y documentamos</h4><p>Desarrollamos cálculos, planos, memorias y especificaciones técnicas.</p></article>
+        <article class="process-step"><div class="n">05</div><h4>Coordinamos la ejecución</h4><p>Conectamos ingeniería, fabricación, montaje y supervisión para disminuir ajustes en terreno.</p></article>
+        <article class="process-step"><div class="n">06</div><h4>Protegemos la operación</h4><p>Planificamos soporte y mantenimiento para cuidar continuidad, seguridad y rendimiento.</p></article>
       </div>
     </div>
   </section>
@@ -740,7 +712,7 @@
       <div class="footer-col">
         <h5>Empresa</h5>
         <a href="#autoridad">Respaldo</a>
-        <a href="#proceso">Proceso</a>
+        <a href="#decisiones">Cómo trabajamos</a>
         <a href="#proyectos">Proyectos</a>
         <a href="historia/">Trayectoria</a>
         <a href="#contacto">Contacto</a>
