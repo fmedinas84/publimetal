@@ -2,7 +2,7 @@ import {
   buildProjectImageUrl,
   buildProjectLightboxImageUrl,
   fetchPublishedProjects,
-} from './sanity-client.js?v=20260727-1'
+} from './sanity-client.js?v=20260727-3'
 
 let projects = []
 let emptyActionMode = 'reset'
@@ -27,29 +27,57 @@ const lightboxCount = lightbox.querySelector('.trajectory-lightbox-count')
 const closeLightboxButton = lightbox.querySelector('.trajectory-lightbox-close')
 const previousImageButton = lightbox.querySelector('.trajectory-lightbox-prev')
 const nextImageButton = lightbox.querySelector('.trajectory-lightbox-next')
+const videoModal = document.getElementById('trajectoryVideoModal')
+const videoDialog = videoModal.querySelector('.trajectory-video-dialog')
+const videoTitle = document.getElementById('trajectoryVideoTitle')
+const videoFrameWrap = videoModal.querySelector('.trajectory-video-frame')
+const videoFrame = document.getElementById('trajectoryVideoFrame')
+const closeVideoButton = videoModal.querySelector('.trajectory-video-close')
 
 let lightboxImages = []
 let activeImageIndex = 0
 let lastFocusedElement = null
+let lastVideoTrigger = null
 
-const categorySlugs = new Map()
 const categoryLabels = {
-  'via-publica': 'Vía pública',
-  metro: 'Metro',
-  aeropuerto: 'Aeropuerto',
-  'centro-comercial': 'Centro comercial',
-  estadio: 'Estadio',
-  movil: 'Móvil',
-  otro: 'Otro',
+  'publicidad-estatica': 'Publicidad estática',
+  'soportes-digitales': 'Soportes digitales',
+  'proyectos-especiales': 'Proyectos especiales',
 }
 
-function slugify(value) {
-  return value
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '')
+function getYouTubeVideo(value) {
+  if (!value) return null
+
+  try {
+    const url = new URL(value)
+    const hostname = url.hostname.toLowerCase().replace(/^www\./, '')
+    let id = ''
+    let orientation = 'landscape'
+
+    if (!['http:', 'https:'].includes(url.protocol)) return null
+
+    if (hostname === 'youtu.be') {
+      id = url.pathname.split('/').filter(Boolean)[0] || ''
+    } else if (hostname === 'youtube.com' || hostname === 'm.youtube.com') {
+      if (url.pathname === '/watch') {
+        id = url.searchParams.get('v') || ''
+      } else if (url.pathname.startsWith('/shorts/')) {
+        id = url.pathname.split('/')[2] || ''
+        orientation = 'portrait'
+      }
+    }
+
+    if (!/^[A-Za-z0-9_-]{11}$/.test(id)) return null
+
+    return {
+      id,
+      orientation,
+      thumbnail: `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`,
+      thumbnailFallback: `https://i.ytimg.com/vi/${id}/mqdefault.jpg`,
+    }
+  } catch {
+    return null
+  }
 }
 
 function getDecade(project) {
@@ -60,7 +88,7 @@ function getDecade(project) {
 }
 
 function mapSanityProject(project) {
-  const category = categoryLabels[project.category] || project.category || categoryLabels.otro
+  const category = categoryLabels[project.category] || ''
   const imageSources = [project.mainImage, ...(project.gallery || [])].filter((image) => image?.asset)
   const uniqueImageSources = imageSources.filter(
     (image, index, images) => {
@@ -83,9 +111,11 @@ function mapSanityProject(project) {
     cliente: project.client || '',
     ubicacion: project.location || '',
     categoria: category,
+    categoriaValor: category ? project.category : '',
     imagen: buildProjectImageUrl(project.mainImage),
     imagenAlt: project.mainImage?.alt || '',
     imagenes: images,
+    video: getYouTubeVideo(project.youtubeUrl),
     descripcion: project.shortDescription || '',
   }
 }
@@ -97,7 +127,52 @@ function createProjectCard(project) {
   const media = document.createElement('div')
   media.className = 'history-card-media'
 
-  if (project.imagen) {
+  if (project.video) {
+    const videoButton = document.createElement('button')
+    videoButton.className = 'history-card-video-button'
+    videoButton.type = 'button'
+    videoButton.setAttribute('aria-label', `Ver video de ${project.titulo}`)
+
+    const thumbnail = document.createElement('img')
+    thumbnail.src = project.video.thumbnail
+    thumbnail.alt = `Miniatura del video de ${project.titulo}`
+    thumbnail.loading = 'lazy'
+    thumbnail.decoding = 'async'
+    thumbnail.referrerPolicy = 'strict-origin-when-cross-origin'
+    thumbnail.addEventListener('error', () => {
+      if (thumbnail.src !== project.video.thumbnailFallback) {
+        thumbnail.src = project.video.thumbnailFallback
+      } else if (project.imagen && thumbnail.src !== project.imagen) {
+        thumbnail.src = project.imagen
+      }
+    })
+
+    const playIndicator = document.createElement('span')
+    playIndicator.className = 'history-card-play'
+    playIndicator.setAttribute('aria-hidden', 'true')
+    playIndicator.innerHTML =
+      '<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="m9 7 8 5-8 5V7Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>'
+
+    videoButton.append(thumbnail, playIndicator)
+    videoButton.addEventListener('click', () => openVideoModal(project))
+    media.append(videoButton)
+
+    if (project.imagenes.length) {
+      const galleryButton = document.createElement('button')
+      galleryButton.className = 'history-card-gallery-button'
+      galleryButton.type = 'button'
+      galleryButton.setAttribute(
+        'aria-label',
+        project.imagenes.length > 1
+          ? `Abrir galería de ${project.imagenes.length} imágenes de ${project.titulo}`
+          : `Ampliar imagen de ${project.titulo}`,
+      )
+      galleryButton.innerHTML =
+        '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="m7 16 3.2-3.2 2.4 2.4 1.8-1.8L18 17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="15.5" cy="9.5" r="1.5" stroke="currentColor" stroke-width="1.4"/></svg>'
+      galleryButton.addEventListener('click', () => openLightbox(project))
+      media.append(galleryButton)
+    }
+  } else if (project.imagen) {
     const imageButton = document.createElement('button')
     imageButton.className = 'history-card-image-button'
     imageButton.type = 'button'
@@ -125,10 +200,12 @@ function createProjectCard(project) {
     media.append(imageButton)
   }
 
-  const category = document.createElement('span')
-  category.className = 'history-card-category mono'
-  category.textContent = project.categoria
-  media.append(category)
+  if (project.categoria) {
+    const category = document.createElement('span')
+    category.className = 'history-card-category mono'
+    category.textContent = project.categoria
+    media.append(category)
+  }
 
   const body = document.createElement('div')
   body.className = 'history-card-body'
@@ -147,7 +224,7 @@ function createProjectCard(project) {
   details.className = 'history-card-details'
 
   if (project.cliente) {
-    details.append(createDetail('Cliente', project.cliente))
+    details.append(createDetail('Solicitado por', project.cliente))
   }
 
   if (project.ubicacion) {
@@ -179,17 +256,11 @@ function createDetail(label, value) {
 
 function populateCategories() {
   while (categoryFilter.options.length > 1) categoryFilter.remove(1)
-  categorySlugs.clear()
 
-  const categories = [...new Set(projects.map((project) => project.categoria).filter(Boolean))]
-    .sort((first, second) => first.localeCompare(second, 'es'))
-
-  categories.forEach((category) => {
-    const slug = slugify(category)
-    categorySlugs.set(category, slug)
+  Object.entries(categoryLabels).forEach(([value, label]) => {
     const option = document.createElement('option')
-    option.value = slug
-    option.textContent = category
+    option.value = value
+    option.textContent = label
     categoryFilter.append(option)
   })
 }
@@ -221,7 +292,7 @@ function getFilteredProjects() {
     const matchesDecade = decadeFilter.value === 'all' || getDecade(project) === decadeFilter.value
     const matchesYear = yearFilter.value === 'all' || String(project.anio) === yearFilter.value
     const matchesCategory =
-      categoryFilter.value === 'all' || categorySlugs.get(project.categoria) === categoryFilter.value
+      categoryFilter.value === 'all' || project.categoriaValor === categoryFilter.value
     return matchesDecade && matchesYear && matchesCategory
   })
 
@@ -343,10 +414,12 @@ function showAdjacentImage(direction) {
   updateLightboxImage()
 }
 
-function trapLightboxFocus(event) {
+function trapModalFocus(event, container) {
   if (event.key !== 'Tab') return
 
-  const focusableElements = [...lightbox.querySelectorAll('button:not([hidden])')]
+  const focusableElements = [
+    ...container.querySelectorAll('button:not([hidden]), iframe, [tabindex]:not([tabindex="-1"])'),
+  ].filter((element) => !element.disabled)
   const firstElement = focusableElements[0]
   const lastElement = focusableElements.at(-1)
 
@@ -357,6 +430,29 @@ function trapLightboxFocus(event) {
     event.preventDefault()
     firstElement.focus()
   }
+}
+
+function openVideoModal(project) {
+  if (!project.video) return
+
+  const origin = encodeURIComponent(window.location.origin)
+  lastVideoTrigger = document.activeElement
+  videoTitle.textContent = project.titulo
+  videoFrameWrap.classList.toggle('portrait', project.video.orientation === 'portrait')
+  videoFrame.src = `https://www.youtube-nocookie.com/embed/${project.video.id}?rel=0&playsinline=1&origin=${origin}`
+  videoFrame.title = `Video de ${project.titulo}`
+  videoModal.classList.add('open')
+  videoModal.setAttribute('aria-hidden', 'false')
+  document.body.classList.add('lightbox-open')
+  closeVideoButton.focus()
+}
+
+function closeVideoModal() {
+  videoModal.classList.remove('open')
+  videoModal.setAttribute('aria-hidden', 'true')
+  document.body.classList.remove('lightbox-open')
+  videoFrame.removeAttribute('src')
+  lastVideoTrigger?.focus()
 }
 
 function clearFilters() {
@@ -420,12 +516,24 @@ lightbox.addEventListener('click', (event) => {
   }
 })
 
+closeVideoButton.addEventListener('click', closeVideoModal)
+videoModal.addEventListener('click', (event) => {
+  if (event.target === videoModal || !videoDialog.contains(event.target)) closeVideoModal()
+})
+
 document.addEventListener('keydown', (event) => {
-  if (!lightbox.classList.contains('open')) return
-  if (event.key === 'Escape') closeLightbox()
-  if (event.key === 'ArrowLeft' && !previousImageButton.hidden) showAdjacentImage(-1)
-  if (event.key === 'ArrowRight' && !nextImageButton.hidden) showAdjacentImage(1)
-  trapLightboxFocus(event)
+  if (lightbox.classList.contains('open')) {
+    if (event.key === 'Escape') closeLightbox()
+    if (event.key === 'ArrowLeft' && !previousImageButton.hidden) showAdjacentImage(-1)
+    if (event.key === 'ArrowRight' && !nextImageButton.hidden) showAdjacentImage(1)
+    trapModalFocus(event, lightbox)
+    return
+  }
+
+  if (videoModal.classList.contains('open')) {
+    if (event.key === 'Escape') closeVideoModal()
+    trapModalFocus(event, videoModal)
+  }
 })
 
 menuButton.addEventListener('click', () => {
@@ -443,5 +551,9 @@ navLinks.querySelectorAll('a').forEach((link) => {
 })
 
 document.getElementById('currentYear').textContent = new Date().getFullYear()
+
+if (window.location.protocol === 'file:') {
+  console.warn('Los videos de YouTube deben probarse mediante http:// o https://.')
+}
 
 loadProjects()

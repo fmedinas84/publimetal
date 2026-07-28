@@ -1,14 +1,45 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
 
 const currentYear = new Date().getFullYear()
+const projectCategories = [
+  {title: 'Publicidad estática', value: 'publicidad-estatica'},
+  {title: 'Soportes digitales', value: 'soportes-digitales'},
+  {title: 'Proyectos especiales', value: 'proyectos-especiales'},
+]
+const projectCategoryValues = new Set(projectCategories.map(({value}) => value))
+
+function isValidYouTubeUrl(value: string) {
+  try {
+    const url = new URL(value)
+    const hostname = url.hostname.toLowerCase().replace(/^www\./, '')
+    let videoId = ''
+
+    if (!['http:', 'https:'].includes(url.protocol)) return false
+
+    if (hostname === 'youtu.be') {
+      videoId = url.pathname.split('/').filter(Boolean)[0] || ''
+    } else if (hostname === 'youtube.com' || hostname === 'm.youtube.com') {
+      if (url.pathname === '/watch') {
+        videoId = url.searchParams.get('v') || ''
+      } else if (url.pathname.startsWith('/shorts/')) {
+        videoId = url.pathname.split('/')[2] || ''
+      }
+    }
+
+    return /^[A-Za-z0-9_-]{11}$/.test(videoId)
+  } catch {
+    return false
+  }
+}
 
 export const projectType = defineType({
   name: 'project',
   title: 'Proyectos',
   type: 'document',
   groups: [
-    {name: 'content', title: 'Contenido', default: true},
-    {name: 'images', title: 'Imágenes'},
+    {name: 'content', title: 'Información principal', default: true},
+    {name: 'classification', title: 'Clasificación'},
+    {name: 'images', title: 'Contenido multimedia'},
     {name: 'publication', title: 'Publicación'},
   ],
   fields: [
@@ -21,42 +52,41 @@ export const projectType = defineType({
     }),
     defineField({
       name: 'client',
-      title: 'Cliente',
+      title: 'Solicitado por',
       type: 'string',
       group: 'content',
+      description: 'Empresa u organización que solicitó el trabajo.',
       validation: (rule) => rule.required().max(120),
     }),
     defineField({
       name: 'category',
       title: 'Categoría',
       type: 'string',
-      group: 'content',
+      group: 'classification',
+      description: 'Selecciona una de las tres categorías disponibles.',
       options: {
-        list: [
-          {title: 'Vía pública', value: 'via-publica'},
-          {title: 'Metro', value: 'metro'},
-          {title: 'Aeropuerto', value: 'aeropuerto'},
-          {title: 'Centro comercial', value: 'centro-comercial'},
-          {title: 'Estadio', value: 'estadio'},
-          {title: 'Móvil', value: 'movil'},
-          {title: 'Otro', value: 'otro'},
-        ],
+        list: projectCategories,
         layout: 'dropdown',
       },
-      validation: (rule) => rule.required(),
+      validation: (rule) =>
+        rule.required().custom((value) =>
+          !value || projectCategoryValues.has(value)
+            ? true
+            : 'Selecciona Publicidad estática, Soportes digitales o Proyectos especiales.',
+        ),
     }),
     defineField({
       name: 'location',
       title: 'Ubicación',
       type: 'string',
-      group: 'content',
+      group: 'classification',
       validation: (rule) => rule.required().max(160),
     }),
     defineField({
       name: 'year',
       title: 'Año',
       type: 'number',
-      group: 'content',
+      group: 'classification',
       validation: (rule) =>
         rule.integer().min(1900).max(currentYear + 1).warning('Revisa el año del proyecto.'),
     }),
@@ -91,6 +121,20 @@ export const projectType = defineType({
         }),
       ],
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'youtubeUrl',
+      title: 'Video de YouTube',
+      type: 'url',
+      group: 'images',
+      description:
+        'Opcional. Pega la URL completa del video de YouTube. Se mostrará una miniatura en Trayectoria.',
+      validation: (rule) =>
+        rule.custom((value) =>
+          !value || isValidYouTubeUrl(value)
+            ? true
+            : 'Ingresa una URL válida de YouTube, youtu.be o YouTube Shorts.',
+        ),
     }),
     defineField({
       name: 'gallery',

@@ -21,6 +21,7 @@ export const projectsQuery = `
       location,
       year,
       shortDescription,
+      youtubeUrl,
       mainImage {
         asset,
         crop,
