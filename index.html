@@ -172,6 +172,8 @@
   .hero h1 span{color:var(--cyan)}
   .hero .lead{color:#D8DFEB;font-size:18px;max-width:660px;margin:24px 0 30px;text-shadow:0 2px 5px rgba(0,0,0,.35)}
   .hero .actions{display:flex;gap:14px;flex-wrap:wrap}
+  .hero-disclaimer{max-width:680px;margin:16px 0 0;color:#AEB9CA;font-size:12.5px;line-height:1.55}
+  .hero-disclaimer + .stat-row{margin-top:30px}
   .stat-row{display:flex;gap:34px;margin-top:48px;flex-wrap:wrap}
   .stat b{display:block;font-family:'Space Grotesk',sans-serif;font-size:28px;color:var(--white)}
   .stat span{font-size:12px;color:var(--muted);font-family:'IBM Plex Mono',monospace;letter-spacing:.05em;text-transform:uppercase}
@@ -180,7 +182,7 @@
     .hero{min-height:auto;padding-top:86px}
     .hero-wrap{padding-left:24px}
   }
-  @media(max-width:720px){.hero-wrap{padding-left:18px}}
+  @media(max-width:720px){.hero-wrap{padding-left:18px}.hero-title-break{display:none}}
 
   .trust-band{padding:34px 0;border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);background:#0C1424}
   .trust-grid{display:grid;grid-template-columns:1.2fr 2fr;gap:30px;align-items:center}
@@ -424,12 +426,12 @@
     <div class="grid-bg"></div>
     <div class="container hero-wrap">
       <div>
-        <div class="eyebrow">Publicidad exterior · Ingeniería estructural · 40 años</div>
-        <h1>Desarrollamos proyectos de <span>publicidad exterior</span> de principio a fin.</h1>
-        <p class="lead">Ingeniería, fabricación, instalación y soporte continuo para que tu inversión funcione desde el primer día y durante toda su vida útil.</p>
+        <div class="eyebrow">Soluciones técnicas para operadores de publicidad exterior</div>
+        <h1>Resolvemos la <span>instalación técnica</span> de soportes publicitarios <br class="hero-title-break">de principio a fin.</h1>
+        <p class="lead">Trabajamos junto a medios de publicidad exterior y administradores de espacios publicitarios para evaluar ubicaciones, desarrollar la ingeniería y planificar la fabricación, instalación y continuidad operativa de cada soporte publicitario.</p>
         <div class="actions">
-          <button class="cta-btn" data-scroll="contacto">Evaluar mi ubicación</button>
-          <button class="cta-btn ghost" data-scroll="proyectos">Ver proyectos diseñados</button>
+          <button class="cta-btn" data-scroll="contacto">Quiero más información</button>
+          <button class="cta-btn ghost" data-scroll="proyectos">Ver instalaciones realizadas</button>
         </div>
         <div class="stat-row" aria-label="Indicadores de experiencia">
           <div class="stat"><b>40+</b><span>Años de experiencia</span></div>
@@ -472,7 +474,7 @@
       </div>
       <figure class="technical-photo">
         <img src="images/pak-constr.jpg" alt="Pantalla LED y estructura metálica en construcción en Parque Arauco" loading="lazy" decoding="async">
-        <figcaption>Proyecto en construcción en Parque Arauco: pantalla LED y estructura de soporte en proceso de instalación.</figcaption>
+        <figcaption>Proyecto de ingeniería para pantalla de Massiva en Parque Arauco, con accesos previstos para inspección y mantenimiento técnico.</figcaption>
       </figure>
     </div>
   </section>
@@ -482,11 +484,11 @@
     <div class="container">
       <div class="section-head">
         <div class="eyebrow">Qué riesgos debes evitar</div>
-        <h2>Una pantalla no es solo una compra: es una inversión expuesta.</h2>
+        <h2>Un letrero, una estructura publicitaria o una pantalla LED no son solo una compra: son una inversión expuesta.</h2>
         <p>El costo real aparece cuando una ubicación no sirve, un permiso se detiene, una estructura se recalcula tarde o una instalación obliga a improvisar en obra.</p>
       </div>
       <div class="risk-grid">
-        <article class="risk-card"><div class="idx">01</div><h3>Ubicación mal evaluada</h3><p>Antes de invertir, conviene saber si el emplazamiento puede soportar el formato, la altura y las condiciones reales de instalación.</p></article>
+        <article class="risk-card"><div class="idx">01</div><h3>Ubicación mal evaluada</h3><p>Antes de invertir, evaluamos si la ubicación presenta restricciones técnicas, legales o viales, y si permite instalar el formato, la altura y la orientación adecuados.</p></article>
         <article class="risk-card"><div class="idx">02</div><h3>Permisos sin respaldo</h3><p>La memoria de cálculo, planos y firma profesional reducen dudas técnicas ante revisiones municipales, viales o normativas.</p></article>
         <article class="risk-card"><div class="idx">03</div><h3>Montaje improvisado</h3><p>Un diseño claro evita ajustes costosos en terreno y ayuda a coordinar fabricación, anclajes, accesos y seguridad.</p></article>
         <article class="risk-card"><div class="idx">04</div><h3>Activo detenido</h3><p>Si una pantalla deja de operar, el problema no es solo técnico: se detiene la exposición comercial que debía generar ingresos.</p></article>
@@ -502,7 +504,7 @@
         <p>Acompañamos cada etapa para reducir riesgos, ordenar decisiones y llegar a una solución técnicamente viable.</p>
       </div>
       <div class="process-strip">
-        <article class="process-step"><div class="n">01</div><h4>Evaluamos la ubicación</h4><p>Revisamos el entorno, el formato, la altura, los accesos y las condiciones reales de instalación.</p></article>
+        <article class="process-step"><div class="n">01</div><h4>Inspeccionamos la ubicación</h4><p>Con la ubicación definida, inspeccionamos el emplazamiento, revisamos el entorno y proponemos el formato y la orientación más adecuados para iniciar el desarrollo técnico.</p></article>
         <article class="process-step"><div class="n">02</div><h4>Detectamos restricciones</h4><p>Identificamos riesgos estructurales, normativos, constructivos y operativos antes de avanzar.</p></article>
         <article class="process-step"><div class="n">03</div><h4>Definimos la viabilidad</h4><p>Determinamos qué solución puede ejecutarse y qué antecedentes se necesitan para respaldarla.</p></article>
         <article class="process-step"><div class="n">04</div><h4>Diseñamos y documentamos</h4><p>Desarrollamos cálculos, planos, memorias y especificaciones técnicas.</p></article>
