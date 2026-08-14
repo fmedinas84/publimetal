@@ -5,7 +5,7 @@
   --line: #28374f;
   --line-soft: #1c2a41;
   --cyan: #5be0e8;
-  --amber: #ff8a3d;
+  --crimson: #dc143c;
   --text: #edf1f7;
   --muted: #9aa6ba;
   --white: #fff;
@@ -168,8 +168,8 @@ h3 {
   padding: 11px 20px;
   border: 0;
   border-radius: 6px;
-  background: var(--amber);
-  color: #141014;
+  background: var(--crimson);
+  color: #fff;
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
@@ -179,7 +179,7 @@ h3 {
 }
 
 .button:hover {
-  background: #ffa25e;
+  background: #a80f2e;
 }
 
 .button:active {
