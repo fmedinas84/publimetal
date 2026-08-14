@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /publimetal/studio/
+
+Sitemap: https://fmedinas84.github.io/publimetal/sitemap.xml
