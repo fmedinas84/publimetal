@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /publimetal/studio/
 
-Sitemap: https://publimetal.cl/sitemap.xml
+Sitemap: https://www.publimetal.cl/sitemap.xml
