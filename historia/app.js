@@ -120,6 +120,17 @@ function mapSanityProject(project) {
   }
 }
 
+function trackProjectView(project) {
+  const parameters = {
+    project_name: project.titulo,
+  }
+
+  if (Number.isInteger(project.anio)) parameters.project_year = project.anio
+  if (project.categoria) parameters.project_category = project.categoria
+
+  window.trackPublimetalEvent?.('view_project', parameters)
+}
+
 function createProjectCard(project) {
   const article = document.createElement('article')
   article.className = 'history-card'
@@ -386,6 +397,7 @@ function updateLightboxImage() {
 function openLightbox(project) {
   if (!project.imagenes.length) return
 
+  trackProjectView(project)
   lightboxImages = project.imagenes.map((image, index) => ({
     ...image,
     alt: image.alt || `${project.titulo} — imagen ${index + 1}`,
@@ -435,6 +447,7 @@ function trapModalFocus(event, container) {
 function openVideoModal(project) {
   if (!project.video) return
 
+  trackProjectView(project)
   const origin = encodeURIComponent(window.location.origin)
   lastVideoTrigger = document.activeElement
   videoTitle.textContent = project.titulo

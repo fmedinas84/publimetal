@@ -24,6 +24,7 @@
 <meta name="twitter:title" content="Publimetal | Ingeniería para publicidad exterior">
 <meta name="twitter:description" content="Soluciones técnicas para soportes publicitarios y pantallas LED, desde la evaluación hasta la continuidad operativa.">
 <meta name="twitter:image" content="https://www.publimetal.cl/images/MPV-froilan%20roa.jpg">
+<script defer src="analytics.js"></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -1258,6 +1259,9 @@
       formMessage.textContent =
         'Gracias. Recibimos los antecedentes de tu proyecto y te contactaremos a la brevedad.';
       formMessage.classList.add('show');
+      window.trackPublimetalEvent?.('generate_lead', {
+        form_location: 'home_contact',
+      });
       contactForm.reset();
     } catch (error) {
       console.error('Error al enviar el formulario:', error);
